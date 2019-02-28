@@ -12,6 +12,12 @@ export default [
     view: 'Login'
   },
   {
+    // add register by keith
+    path: '/register',
+    name: 'Register',
+    view: 'Register'
+  },
+  {
     // add pixel by keith
     path: '/pixel',
     name: 'Pixel',
