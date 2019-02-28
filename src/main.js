@@ -15,6 +15,10 @@ import { sync } from 'vuex-router-sync'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+// 全局挂载 api 
+import api from './plugins/api/api'
+Vue.prototype.$api = api
+
 // Application imports
 import App from './App'
 import i18n from '@/i18n'
