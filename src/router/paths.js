@@ -24,6 +24,18 @@ export default [
     view: 'Pixel'
   },
   {
+    // add editprofile by keith
+    path: '/edit-profile',
+    name: 'EditProfile',
+    view: 'EditProfile'
+  },
+  {
+    // add test by keith
+    path: '/test',
+    name: 'Test',
+    view: 'Test'
+  },
+  {
     path: '/dashboard',
     // Relative to /src/views
     view: 'Dashboard'

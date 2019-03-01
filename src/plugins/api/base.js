@@ -4,7 +4,7 @@
 const base = {
     sq: 'https://xxxx111111.com/api/v1',
     bd: 'http://xxxxx22222.com/api',
-    dev: 'https://47.93.0.71',
+    dev: 'http://46.101.35.132:8080',
     baidu: 'https://baid.com'
 
 }

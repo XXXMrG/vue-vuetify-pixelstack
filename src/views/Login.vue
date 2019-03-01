@@ -21,6 +21,8 @@
                     type="password"
                     v-model="pwd"
                     :rules="pwdRules"
+                    clearable
+                    @keyup.enter="test"
                   />
                 </v-flex>
                 <v-flex md6 offset-md6>
@@ -29,7 +31,8 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="test_02()">登录</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="success" @click="test()">登录</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="success" @click="test_03()">fuck</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -68,22 +71,37 @@ export default {
     },
 
     test() {
-      this.$api.user
-        .test({
-          key: '保研',
-          page: 'sdfgd'
-        })
-        .then(res => {
-          console.log(res);
-        });
+      if (this.$refs.form.validate()) {
+        this.$api.user
+          .login({
+            username: this.username,
+            password: this.pwd
+          })
+          .then(res => {
+            console.log(res);
+            this.$store.commit("setToken", res.data.userInfo.token);
+            this.$store.commit("setUser", res.data.userInfo);
+          });
+      }
     },
 
     test_02() {
-      this.$store.commit('setToken', '123123')
-      this.$store.commit('setUser', {
+      this.$store.commit("setToken", "123123");
+      this.$store.commit("setUser", {
         username: this.username,
         pwd: this.pwd
-      })
+      });
+    },
+
+    test_03() {
+      this.$api.user
+        .test_02({})
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

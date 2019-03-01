@@ -29,7 +29,11 @@ import qs from 'qs'; // 根据需求是否导入qs模块
 const user = {
     // 登录
     login(params) {
-        return axios.post(`${base.dev}/login`, qs.stringify(params));
+        return axios.post(`${base.dev}/user/login`, qs.stringify(params));
+    },
+    //修改个人信息
+    edit(params){
+        return axios.post(`${base.dev}/user/modify`, qs.stringify(params));
     },
     test(params) {
         return axios.get(`${base.dev}/query/bykey`, {
@@ -37,7 +41,7 @@ const user = {
         })
     },
     test_02(){
-        return axios.get(`${base.baidu}`)
+        return axios.post(`${base.dev}/user/getMessage`)
     }
 }
 

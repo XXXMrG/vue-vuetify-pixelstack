@@ -14,8 +14,8 @@
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </el-col>
-            <el-col :span="12" :offset="6">
-              <div>
+            <el-col :span="12" :offset="5">
+              <div class="div-tag">
                 <el-tag
                   :key="tag"
                   v-for="tag in dynamicTags"
@@ -23,16 +23,11 @@
                   :disable-transitions="false"
                   @close="handleClose(tag)"
                 >{{tag}}</el-tag>
-                <el-input
-                  class="input-new-tag"
-                  v-if="inputVisible"
-                  v-model="inputValue"
-                  ref="saveTagInput"
-                  size="small"
-                  @keyup.enter.native="handleInputConfirm"
-                  @blur="handleInputConfirm"
-                ></el-input>
-                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+              </div>
+            </el-col>
+            <el-col :span="12" :offset="5">
+              <div class="div-add-tag">
+              <v-text-field label="添加新标签" class="purple-input" v-model="inputValue" @keyup.enter="handleInputConfirm"/>
               </div>
             </el-col>
           </el-row>
@@ -44,9 +39,15 @@
 
 
 <style>
+.div-tag {
+  margin-top: 20px
+}
+.div-add-tag {
+  margin-top: 20px
+}
 .el-tag + .el-tag {
   margin-left: 10px;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .button-new-tag {
   margin-left: 10px;
@@ -56,6 +57,7 @@
   padding-bottom: 0;
 }
 .input-new-tag {
+  margin-top: 10px;
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
@@ -66,7 +68,7 @@
 export default {
   data() {
     return {
-      dynamicTags: ["标签一", "标签二", "标签三"],
+      dynamicTags: [],
       inputVisible: false,
       inputValue: ""
     };
@@ -74,13 +76,6 @@ export default {
   methods: {
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
-
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
     },
 
     handleInputConfirm() {

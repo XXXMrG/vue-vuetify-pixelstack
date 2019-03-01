@@ -2,7 +2,10 @@
 
 export default {
   // add state by keith
-  user: {},
+  user: {
+    uid: 0,
+    authority: ''
+  },
   token: ''
   
 }

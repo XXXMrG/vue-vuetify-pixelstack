@@ -135,7 +135,8 @@
               color="success"
               round
               class="font-weight-light"
-            >Follow</v-btn>
+              to="/edit-profile"
+            >Edit profile</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
