@@ -1,142 +1,31 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl>
-    <v-layout
-      justify-center
-      wrap
-    >
-      <v-flex
-        xs12
-        md8
-      >
-        <material-card
-          color="green"
-          title="Edit Profile"
-          text="Complete your profile"
-        >
-          <v-form>
-            <v-container py-0>
-              <v-layout wrap>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Company (disabled)"
-                    disabled/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="User Name"
-                  />
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md6
-                >
-                  <v-text-field
-                    label="First Name"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md6
-                >
-                  <v-text-field
-                    label="Last Name"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md12
-                >
-                  <v-text-field
-                    label="Adress"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4>
-                  <v-text-field
-                    label="City"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4>
-                  <v-text-field
-                    label="Country"
-                    class="purple-input"/>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4>
-                  <v-text-field
-                    class="purple-input"
-                    label="Postal Code"
-                    type="number"/>
-                </v-flex>
-                <v-flex xs12>
-                  <v-textarea
-                    class="purple-input"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  />
-                </v-flex>
-                <v-flex
-                  xs12
-                  text-xs-right
-                >
-                  <v-btn
-                    class="mx-0 font-weight-light"
-                    color="success"
-                  >
-                    Update Profile
-                  </v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-form>
-        </material-card>
+  <v-container fill-height fluid grid-list-xl>
+    <v-layout justify-center wrap>
+      <v-flex xs12 md8>
+        <material-card color="green" title="Edit Profile" text="Complete your profile"></material-card>
       </v-flex>
-      <v-flex
-        xs12
-        md4
-      >
+      <v-flex xs12 md4>
         <material-card class="v-card-profile">
-          <v-avatar
-            slot="offset"
-            class="mx-auto d-block"
-            size="130"
-          >
-            <img
-              src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-            >
+          <v-avatar slot="offset" class="mx-auto d-block" size="130">
+            <img src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg">
           </v-avatar>
+          <v-spacer></v-spacer>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">CEO / CO-FOUNDER</h6>
-            <h4 class="card-title font-weight-light">Alec Thompson</h4>
-            <p class="card-description font-weight-light">Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-            <v-btn
-              color="success"
-              round
-              class="font-weight-light"
-              to="/edit-profile"
-            >Edit profile</v-btn>
+            <h6 class="category text-gray font-weight-thin mb-3">{{email}}</h6>
+            <h4 class="card-title font-weight-light">{{username}}</h4>
+            <p class="card-description font-weight-light">{{about}}</p>
+            <v-card-text>
+              <router-link to="/pixel">
+                <span>Follow: {{follow}}</span>
+              </router-link>
+              <router-link to="/pixel" class="items">
+                <span>Star: {{star}}</span>
+              </router-link>
+              <router-link to="/pixel" class="items">
+                <span>Fans: {{fans}}</span>
+              </router-link>
+            </v-card-text>
+            <v-btn color="success" round class="font-weight-light" to="/edit-profile">Edit profile</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -146,6 +35,39 @@
 
 <script>
 export default {
-  //
-}
+  // add by keith
+  data: () => ({
+    username: "",
+    email: "",
+    about: "",
+    follow: 0,
+    star: 0,
+    fans: 0
+  }),
+
+  created: function() {
+    this.$api.user
+      .getInfo({
+        uid: window.localStorage.uid
+      })
+      .then(res => {
+        console.log(res)
+        var info = res.data.userInfo;
+        this.username = info.username;
+        this.email = info.email;
+        this.about = info.introduction;
+        this.follow = info.follow;
+        this.star = info.star;
+        this.fans = info.fans;
+      })
+      .catch(err => {});
+  }
+};
 </script>
+
+<style>
+.items {
+  margin-left: 50px;
+}
+</style>
+

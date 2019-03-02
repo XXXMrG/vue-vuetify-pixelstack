@@ -3,6 +3,9 @@
  * for more information on routes, see the
  * official documentation https://router.vuejs.org/en/
  */
+
+
+// Relative to /src/views
 export default [
 
   {
@@ -26,8 +29,8 @@ export default [
   {
     // add editprofile by keith
     path: '/edit-profile',
-    name: 'EditProfile',
-    view: 'EditProfile'
+    name: 'Edit Profile',
+    view: 'EditProfile',
   },
   {
     // add test by keith
@@ -37,7 +40,6 @@ export default [
   },
   {
     path: '/dashboard',
-    // Relative to /src/views
     view: 'Dashboard'
   },
   {

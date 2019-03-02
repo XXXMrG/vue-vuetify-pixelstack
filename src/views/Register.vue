@@ -12,6 +12,7 @@
                     class="purple-input"
                     :counter="max"
                     :rules="userRules"
+                    v-model="username"
                   />
                 </v-flex>
                 <v-flex md6 offset-md1>
@@ -20,7 +21,7 @@
                     class="purple-input"
                     type="password"
                     :rules="rules"
-                    v-model="match"
+                    v-model="pwd"
                   />
                 </v-flex>
                 <v-flex md6 offset-md1>
@@ -38,29 +39,11 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="go()">注册</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="success" @click="register()">注册</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
           </v-form>
-
-          <!-- add snackbar by keith -->
-          <v-snackbar
-            color="warning"
-            :bottom="bottom"
-            :top="top"
-            :left="left"
-            :right="right"
-            v-model="snackbar"
-            dark
-          >
-            <v-icon color="white" class="mr-3">mdi-bell-plus</v-icon>
-            <div>
-              Welcome to
-              <b>Vue Material Dashboard</b> - a beautiful freebie for every web developer.
-            </div>
-            <v-icon size="16" @click="snackbar = false">mdi-close-circle</v-icon>
-          </v-snackbar>
         </material-card>
       </v-flex>
     </v-layout>
@@ -71,11 +54,11 @@
 // from vaildate by keith
 export default {
   data: () => ({
-    match: "",
+    username: "",
+    pwd: "",
     max: 16,
     allowSpaces: false,
     model: "",
-    snackbar: false
   }),
 
   computed: {
@@ -86,8 +69,8 @@ export default {
         rules.push(rule);
       }
 
-      if (this.match) {
-        const rule = v => (!!v && v) === this.match || "两次密码输入不一致";
+      if (this.pwd) {
+        const rule = v => (!!v && v) === this.pwd || "两次密码输入不一致";
 
         rules.push(rule);
       }
@@ -130,10 +113,25 @@ export default {
       this.$refs.form.validate();
     },
     // click listener add by keith
-    go() {
+    register() {
       if (this.$refs.form.validate()) {
-        this["top"] = true;
-        this.snackbar = true;
+        this.$api.user
+          .register({
+            username: this.username,
+            password: this.pwd
+          })
+          .then(res => {
+            switch (res.status) {
+              case 200:
+                this.$message({
+                  type: 'success',
+                  message: res.data.message
+                })
+                this.$router.replace('/login')
+                break;
+            }
+          })
+          .catch(err => {});
       }
     }
   }

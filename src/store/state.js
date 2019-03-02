@@ -7,5 +7,4 @@ export default {
     authority: ''
   },
   token: ''
-  
 }

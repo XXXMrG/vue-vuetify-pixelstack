@@ -22,7 +22,7 @@
                     v-model="pwd"
                     :rules="pwdRules"
                     clearable
-                    @keyup.enter="test"
+                    @keyup.enter="login"
                   />
                 </v-flex>
                 <v-flex md6 offset-md6>
@@ -31,8 +31,7 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="test()">登录</v-btn>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="test_03()">fuck</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="success" @click="login()">登录</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -66,11 +65,13 @@ export default {
     go() {
       if (this.$refs.form.validate()) {
         console.log("yyyy");
-        this.$api.user.login();
+        this.$api.user.test().then(res => {
+          console.log(res)
+        })
       }
     },
 
-    test() {
+    login() {
       if (this.$refs.form.validate()) {
         this.$api.user
           .login({
@@ -79,30 +80,38 @@ export default {
           })
           .then(res => {
             console.log(res);
-            this.$store.commit("setToken", res.data.userInfo.token);
-            this.$store.commit("setUser", res.data.userInfo);
+            switch (res.data.status) {
+              case "200":
+                this.$store.commit("setToken", res.data.userInfo.token);
+                this.$store.commit("setUser", res.data.userInfo);
+                this.$message({
+                  type: "success",
+                  message: "登录成功"
+                });
+                this.$router.replace({
+                  path: "/pixel"
+                });
+                break;
+              default:
+                this.$message.error(res.data.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
           });
       }
     },
 
-    test_02() {
-      this.$store.commit("setToken", "123123");
-      this.$store.commit("setUser", {
-        username: this.username,
-        pwd: this.pwd
-      });
-    },
-
-    test_03() {
-      this.$api.user
-        .test_02({})
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    // getInfo() {
+    //   this.$api.user
+    //     .getInfo({
+    //       uid: window.localStorage.uid
+    //     })
+    //     .then(res => {
+    //       console.log(res);
+    //     })
+    //     .catch(err => {});
+    // }
   }
 };
 </script>

@@ -12,5 +12,6 @@ export default {
     state.user.uid = params.uid
     state.user.authority = params.authority
     localStorage.uid = params.uid
+    localStorage.authority = params.authority
   }
 }

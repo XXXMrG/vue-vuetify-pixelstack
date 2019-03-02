@@ -49,6 +49,8 @@ const errorHandle = (status, other) => {
         case 401:
             Message.error('登录过期，请重新登录')
             localStorage.removeItem('token');
+            localStorage.removeItem('uid')
+            localStorage.removeItem('authority')
             //store.commit('loginSuccess', null);
             setTimeout(() => {
                 toLogin();

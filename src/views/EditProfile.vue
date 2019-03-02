@@ -9,7 +9,7 @@
                 <v-flex xs12 md4>
                   <v-text-field class="purple-input" label="User Name" v-model="newName"/>
                 </v-flex>
-                <v-flex xs12 md4>
+                <v-flex xs12 md8>
                   <v-text-field label="Email Address" class="purple-input" v-model="newEmail"/>
                 </v-flex>
                 <v-flex xs12 md6>
@@ -81,6 +81,20 @@ export default {
     about: ""
   }),
 
+  created: function() {
+    this.$api.user
+      .getInfo({
+        uid: window.localStorage.uid
+      })
+      .then(res => {
+        var info = res.data.userInfo;
+        this.newName = info.username;
+        this.newEmail = info.email;
+        this.about = info.introduction;
+      })
+      .catch(err => {});
+  },
+
   computed: {
     rules() {
       const rules = [];
@@ -101,7 +115,6 @@ export default {
     },
 
     commit() {
-        console.log(window.localStorage.uid)
       if (this.$refs.form.validate()) {
         this.$api.user
           .edit({
@@ -113,17 +126,32 @@ export default {
           })
           .then(res => {
             console.log(res);
-            this.$message({
-              message: "信息修改成功！",
-              type: "success"
-            });
-            if (res.data) {
-              router.replace({
-                path: "/login",
-                query: {
-                  redirect: "/user-profile"
-                }
-              });
+            switch (res.data.status) {
+              case "200":
+                this.$message({
+                  message: "信息修改成功！",
+                  type: "success"
+                });
+                this.$router.replace("/user-profile");
+                break;
+              case "201":
+                this.$message({
+                  message: "信息修改成功！需要重新登录",
+                  type: "success"
+                });
+                // remove old user info and token
+                localStorage.removeItem("token");
+                localStorage.removeItem("uid");
+                localStorage.removeItem("authority");
+                this.$router.replace({
+                  path: "/login",
+                  query: {
+                    redirect: "/user-profile"
+                  }
+                });
+                break;
+              default:
+                this.$message.error(res.data.message);
             }
           })
           .catch(err => {});
