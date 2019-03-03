@@ -27,21 +27,11 @@ import qs from 'qs'; // 根据需求是否导入qs模块
 // export default article;
 
 const admin = {
-    // 登录
-    login(params) {
-        return axios.post(`${base.pro}/user/login`, qs.stringify(params));
-    },
-    //修改个人信息
-    edit(params) {
-        return axios.post(`${base.dev}/user/modify`, qs.stringify(params));
-    },
-    test(params) {
-        return axios.get(`${base.dev}/query/bykey`, {
+    // 查看用户列表
+    getUserList(params){
+        return axios.get(`${base.pro}/admin/getUserList`, {
             params: params
         })
-    },
-    test_02() {
-        return axios.post(`${base.dev}/user/getMessage`)
     }
 }
 

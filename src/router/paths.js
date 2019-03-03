@@ -39,6 +39,12 @@ export default [
     view: 'Test'
   },
   {
+    // add admin user by keith
+    path: '/admin-user',
+    name: '管理用户',
+    view: 'AdminUser'
+  },
+  {
     path: '/dashboard',
     view: 'Dashboard'
   },

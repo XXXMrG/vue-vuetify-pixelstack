@@ -51,7 +51,7 @@ export default {
         uid: window.localStorage.uid
       })
       .then(res => {
-        console.log(res)
+        console.log(res);
         var info = res.data.userInfo;
         this.username = info.username;
         this.email = info.email;
