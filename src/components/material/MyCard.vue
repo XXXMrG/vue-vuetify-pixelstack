@@ -1,5 +1,5 @@
 <template>
-  <material-card to="/pixel">
+  <material-card  @click="test">
     <img :src="url" class="mypic">
   </material-card>
 </template>
@@ -16,6 +16,11 @@ export default {
     url: {
       type: String,
       default: '../../../public/img/my.png'
+    }
+  },
+  methods: {
+    test(){
+      console.log("go")
     }
   }
 }

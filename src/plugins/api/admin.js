@@ -28,9 +28,16 @@ import qs from 'qs'; // 根据需求是否导入qs模块
 
 const admin = {
     // 查看用户列表
-    getUserList(params){
+    getUserList(params) {
         return axios.get(`${base.pro}/admin/getUserList`, {
             params: params
+        })
+    },
+    manageStatus(params) {
+        return axios.post(`${base.pro}/admin/manageCountStatus`, params, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
     }
 }

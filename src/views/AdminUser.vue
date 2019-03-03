@@ -39,9 +39,18 @@
               </v-tab>
             </v-tabs>
           </v-flex>
+          <v-flex xs4 offset-xs8>
+            <v-text-field
+              v-model="search"
+              label="Search"
+              append-icon="mdi-account-search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-flex>
           <v-tabs-items v-model="tabs">
             <v-tab-item v-for="n in 3" :key="n">
-              <v-data-table :headers="headers" :items="items.slice(0, 7)" hide-actions>
+              <v-data-table :headers="headers" :items="items" :search="search">
                 <template slot="headerCell" slot-scope="{ header }">
                   <span class="subheading font-weight-light text--darken-3" v-text="header.text"/>
                 </template>
@@ -50,23 +59,21 @@
                   <td>{{ item.username }}</td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.authority }}</td>
-                  <td>{{ item.status }}</td>
-                  <div class="d-flex">
-                    <v-tooltip top content-class="top">
-                      <v-btn slot="activator" class="v-btn--simple" color="success" icon>
-                        <v-icon color="primary">mdi-pencil</v-icon>
-                      </v-btn>
-                      <span>Edit</span>
-                    </v-tooltip>
-
-                    <v-tooltip top content-class="top">
-                      <v-btn slot="activator" class="v-btn--simple" color="danger" icon>
-                        <v-icon color="error">mdi-close</v-icon>
-                      </v-btn>
-                      <span>Close</span>
-                    </v-tooltip>
-                  </div>
+                  <td>
+                    <v-edit-dialog  lazy @save="save(item.uid, item.status)">
+                      {{ item.status }}
+                      <template v-slot:input>
+                        <v-select v-model="item.status" :items="status" label="封禁或解封账户"></v-select>
+                      </template>
+                    </v-edit-dialog>
+                  </td>
                 </template>
+                <v-alert
+                  v-slot:no-results
+                  :value="true"
+                  color="error"
+                  icon="warning"
+                >Your search for "{{ search }}" found no results.</v-alert>
               </v-data-table>
             </v-tab-item>
           </v-tabs-items>
@@ -79,7 +86,9 @@
 <script>
 export default {
   data: () => ({
+    search: "",
     tabs: 0,
+    status: ["normal", "frozen", "terminate"],
     headers: [
       {
         sortable: false,
@@ -129,6 +138,15 @@ export default {
         this.items = res.data.userList;
       })
       .catch(err => {});
+  },
+
+  methods: {
+    save(uid, status) {
+      console.log(uid, status);
+      var json = '{"' + uid + '"' + ':"' + status + '"}'
+      console.log(json)
+      this.$api.admin.manageStatus(json)
+    }
   }
 };
 </script>
