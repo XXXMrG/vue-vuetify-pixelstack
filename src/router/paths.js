@@ -34,9 +34,9 @@ export default [
   },
   {
     // add test by keith
-    path: '/test',
-    name: 'Test',
-    view: 'Test'
+    path: '/upload',
+    name: '上传作品',
+    view: 'Upload'
   },
   {
     // add admin user by keith

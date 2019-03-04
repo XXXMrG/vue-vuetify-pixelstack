@@ -4,7 +4,10 @@
       <v-flex xs10>
         <material-card title="上传作品">
           <el-row>
-            <el-col :span="12" :offset="6">
+            <el-col :span="12" :offset="5">
+              <v-text-field v-model="title" label="键入本组作品的标题"></v-text-field>
+            </el-col>
+            <el-col :span="12" :offset="7">
               <el-upload
                 class="upload-demo"
                 drag
@@ -16,6 +19,10 @@
                 list-type="picture"
                 :on-preview="preview"
                 :on-success="success"
+                :auto-upload="true"
+                ref="upload"
+                :on-remove="handleRemove"
+                :before-upload="ready"
               >
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">
@@ -40,12 +47,17 @@
               <div class="div-add-tag">
                 <v-text-field
                   label="添加新标签，按回车确定"
-                  class="purple-input"
                   v-model="inputValue"
                   @keyup.enter="handleInputConfirm"
                 />
               </div>
             </el-col>
+            <el-col :span="12" :offset="5">
+              <template>
+                <v-btn block color="secondary" dark @click="upload">完成上传</v-btn>
+              </template>
+            </el-col>
+            <el-col :span="24"></el-col>
           </el-row>
         </material-card>
       </v-flex>
@@ -85,17 +97,19 @@ export default {
   data() {
     return {
       dynamicTags: [],
+      pids: [],
       inputVisible: false,
       inputValue: "",
+      title: "",
       // 上传照片时所需的额外参数
       params: {
         uid: window.localStorage.uid,
-        title: "sadfasdf"
+        title: ""
       },
       // 上传组件走独立的请求，无法通过 axios 请求拦截器增加 toekn
       head: {
         Authorization: window.localStorage.token
-      },
+      }
     };
   },
   methods: {
@@ -109,15 +123,39 @@ export default {
         this.dynamicTags.push(inputValue);
       }
       this.inputVisible = false;
-      this.inputValue = "";0
+      this.inputValue = "";
+      0;
     },
     // 点击上传列表中图片的钩子
-    preview() {
-
-    },
+    preview() {},
     // 上传成功时的钩子
     success(response, file, fileList) {
-      console.log(response)
+      console.log(response);
+      this.pids.push(response.upload[0].iid);
+    },
+    // 完成上传的钩子
+    upload() {
+      console.log("dfafdasdfadsfasdfasdf");
+      this.$api.user
+        .addTag({
+          pids: this.pids,
+          tags: this.dynamicTags
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      console.log(data);
+    },
+
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    // 准备上床前的钩子
+    ready(file) {
+      this.params.title = this.title;
     }
   }
 };

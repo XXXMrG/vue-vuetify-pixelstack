@@ -6,5 +6,10 @@ export default {
   error: '#f55a4e',
   info: '#00d3ee',
   success: '#5cb860',
-  warning: '#ffa21a'
+  warning: '#ffa21a',
+  green: '#4caf50',
+  pink: '#E91E63',
+  star: '#FF5722',
+  lightblue: '#03A9F4',
+  default: '#FFFFFF'
 }

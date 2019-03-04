@@ -144,8 +144,11 @@ export default {
     save(uid, status) {
       console.log(uid, status);
       var json = '{"' + uid + '"' + ':"' + status + '"}'
-      console.log(json)
-      this.$api.admin.manageStatus(json)
+      this.$api.admin.manageStatus(json).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 };

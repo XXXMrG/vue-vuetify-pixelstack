@@ -2,7 +2,13 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="green" title="Edit Profile" text="Complete your profile"></material-card>
+        <material-card color="green" title="Edit Profile" text="Complete your profile">
+          <v-layout row wrap v-for="i in 10" :key="i">
+            <v-flex v-for="i in 12" :key="i" md4>
+              <material-my-card :pixel="pixels[0]"></material-my-card>
+            </v-flex>
+          </v-layout>
+        </material-card>
       </v-flex>
       <v-flex xs12 md4>
         <material-card class="v-card-profile">
@@ -42,7 +48,17 @@ export default {
     about: "",
     follow: 0,
     star: 0,
-    fans: 0
+    fans: 0,
+    pixels: [
+      {
+        smallUrl:
+          "http://47.94.111.235:8080/image/lubenwei/2019-03-03/small/cover02.jpg",
+        pid: 100000,
+        views: 100000,
+        stars: 100000,
+        likes: 100000
+      }
+    ]
   }),
 
   created: function() {

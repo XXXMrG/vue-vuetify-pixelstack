@@ -45,6 +45,10 @@ const user = {
     register(params){
         return axios.post(`${base.pro}/user/register`, qs.stringify(params))
     },
+    // 上传图片加标签 post 
+    addTag(params){
+        return axios.post(`${base.pro}/user/addTagsandTitle`, params)
+    },
     test(params) {
         return axios.get('http://47.94.111.235:8080/hello')
     },
