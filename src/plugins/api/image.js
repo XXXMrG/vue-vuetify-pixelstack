@@ -35,6 +35,18 @@ const image = {
     // 添加评论
     addComment(params) {
         return axios.post(`${base.pro}/Comment/add`, qs.stringify(params))
+    },
+    // 收藏图片
+    setStar(params) {
+        return axios.get(`${base.pro}/image/isStar`, {
+            params: params
+        })
+    },
+    // 👍图片
+    setThumb(params) {
+        return axios.get(`${base.pro}/image/isThumb`, {
+            params: params
+        })
     }
 }
 

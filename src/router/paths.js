@@ -49,7 +49,12 @@ export default [
     view: 'Dashboard'
   },
   {
-    path: '/user-profile',
+    path: '/user/:id/type/:type',
+    view: 'UserList'
+  },
+  {
+    // 为该页面增加动态路由，从而提高页面复用
+    path: '/user-profile/:id',
     name: 'User Profile',
     view: 'UserProfile'
   },

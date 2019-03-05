@@ -88,6 +88,8 @@ export default {
                   type: "success",
                   message: "登录成功"
                 });
+                // 重新渲染侧边栏
+                location.reload()
                 this.$router.replace({
                   path: "/pixel"
                 });
@@ -101,17 +103,6 @@ export default {
           });
       }
     },
-
-    // getInfo() {
-    //   this.$api.user
-    //     .getInfo({
-    //       uid: window.localStorage.uid
-    //     })
-    //     .then(res => {
-    //       console.log(res);
-    //     })
-    //     .catch(err => {});
-    // }
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex v-for="(item,index) of pixels.slice(1)" :key="index" md3>
+      <v-flex v-for="(item,index) of pixels.slice(1)" :key="index" xs3>
         <material-my-card :pixel="item"></material-my-card>
       </v-flex>
     </v-layout>
@@ -20,7 +20,6 @@ export default {
     this.$api.image
       .getImageList({})
       .then(res => {
-        console.log(res.data.imageList);
         for (let data of res.data.imageList) {
           this.$api.root.getOriginalUrl(data.url)
           var pixel = {
@@ -32,7 +31,6 @@ export default {
           };
           this.pixels.push(pixel);
         }
-        console.log(this.pixels);
       })
       .catch(err => {});
   }

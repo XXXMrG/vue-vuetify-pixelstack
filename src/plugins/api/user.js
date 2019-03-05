@@ -32,28 +32,52 @@ const user = {
         return axios.post(`${base.pro}/user/login`, qs.stringify(params));
     },
     //修改个人信息 get
-    edit(params){
+    edit(params) {
         return axios.post(`${base.pro}/user/modify`, qs.stringify(params));
     },
     // 获取用户信息 get
-    getInfo(params){
+    getInfo(params) {
         return axios.get(`${base.pro}/user/getUserInfo`, {
             params: params
         })
     },
     // 用户注册 post
-    register(params){
+    register(params) {
         return axios.post(`${base.pro}/user/register`, qs.stringify(params))
     },
     // 上传图片加标签 post 
-    addTag(params){
+    addTag(params) {
         return axios.post(`${base.pro}/user/addTagsandTitle`, params)
     },
-    test(params) {
-        return axios.get('http://47.94.111.235:8080/hello')
+    // 获取用户 id
+    getUid(params) {
+        return axios.get(`${base.pro}/user/getUid`, {
+            params: params
+        })
     },
-    test_02(){
-        return axios.post(`${base.dev}/user/getMessage`)
+    // 删除自己的作品
+    delPic(params) {
+        return axios.post(`${base.pro}/user/deleteImage`, qs.stringify(params))
+    },
+    // 关注用户
+    goFollow(params){
+        return axios.post(`${base.pro}/user/isFollow`, qs.stringify(params))
+    },
+    // 获取关注用户列表
+    getFollowers(params) {
+        return axios.get(`${base.pro}/user/getFollowers`, {
+            params: params
+        })
+    },
+    // 获取粉丝列表
+    getFans(params) {
+        return axios.get(`${base.pro}/user/getFans`, {
+            params: params
+        })
+    },
+    // 判断是否已经关注过
+    followRelate(params) {
+        return axios.post(`${base.pro}/user/followRelate`, qs.stringify(params))
     }
 }
 

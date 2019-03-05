@@ -20,18 +20,34 @@
             <h6 class="category text-gray font-weight-thin mb-3">{{email}}</h6>
             <h4 class="card-title font-weight-light">{{username}}</h4>
             <p class="card-description font-weight-light">{{about}}</p>
-            <v-card-text>
-              <router-link to="/pixel">
+            <v-card-text class="body-2">
+              <router-link :to="followPath">
                 <span>Follow: {{follow}}</span>
               </router-link>
               <router-link to="/pixel" class="items">
                 <span>Star: {{star}}</span>
               </router-link>
-              <router-link to="/pixel" class="items">
+              <router-link :to="fansPath" class="items">
                 <span>Fans: {{fans}}</span>
               </router-link>
             </v-card-text>
-            <v-btn color="success" round class="font-weight-light" to="/edit-profile">Edit profile</v-btn>
+            <v-btn
+              v-if="isOwner"
+              color="success"
+              round
+              class="font-weight-light"
+              to="/edit-profile"
+            >Edit profile</v-btn>
+            <template v-else>
+              <v-btn
+                v-if="isFollow"
+                color="success"
+                round
+                class="font-weight-light"
+                @click="goFollow"
+              >Unfollowed</v-btn>
+              <v-btn v-else color="success" round class="font-weight-light" @click="goFollow">Follow</v-btn>
+            </template>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -49,32 +65,22 @@ export default {
     follow: 0,
     star: 0,
     fans: 0,
-    pixels: [{}]
+    pixels: [{}],
+    isOwner: false,
+    followPath: "",
+    fansPath: "",
+    isFollow: false
   }),
 
   created: function() {
-    // 请求用户个人信息
-    this.$api.user
-      .getInfo({
-        uid: window.localStorage.uid
-      })
-      .then(res => {
-        console.log(res);
-        var info = res.data.userInfo;
-        this.username = info.username;
-        this.email = info.email;
-        this.about = info.introduction;
-        this.follow = info.follow;
-        this.star = info.star;
-        this.fans = info.fans;
-      })
-      .catch(err => {});
-
+    this.followPath = "/user/" + this.$route.params.id + "/type/follow";
+    this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
+    this.isOwner = this.$route.params.id === window.localStorage.uid;
+    this.getData()
     // 请求用户上传的图片
-
     this.$api.image
       .getImageListByUid({
-        uid: window.localStorage.uid
+        uid: this.$route.params.id
       })
       .then(res => {
         for (let data of res.data.imageList) {
@@ -89,6 +95,54 @@ export default {
         }
       })
       .catch(err => {});
+  },
+
+  methods: {
+    getData() {
+      // 请求用户个人信息
+      this.$api.user
+        .getInfo({
+          uid: this.$route.params.id
+        })
+        .then(res => {
+          console.log(res);
+          var info = res.data.userInfo;
+          this.username = info.username;
+          this.email = info.email;
+          this.about = info.introduction;
+          this.follow = info.follow;
+          this.star = info.star;
+          this.fans = info.fans;
+          this.judge();
+        })
+        .catch(err => {});
+    },
+    goFollow() {
+      this.$api.user
+        .goFollow({
+          isFollow: !this.isFollow,
+          uid: window.localStorage.uid,
+          fid: this.$route.params.id
+        })
+        .then(res => {
+          console.log(res);
+          this.getData()
+        })
+        .catch(err => {});
+    },
+
+    judge() {
+      this.$api.user
+        .followRelate({
+          uid: window.localStorage.uid,
+          fid: this.$route.params.id
+        })
+        .then(res => {
+          console.log(res);
+          this.isFollow = res.data.isFollow;
+        })
+        .catch(err => {});
+    }
   }
 };
 </script>

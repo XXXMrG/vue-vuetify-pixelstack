@@ -21,7 +21,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <el-dialog :visible.sync="dialogVisible" lock-scroll>
+    <el-dialog :visible.sync="dialogVisible" lock-scroll :close="onClose">
       <material-img-info :pid="pid"></material-img-info>
     </el-dialog>
   </v-container>
@@ -32,8 +32,6 @@
 export default {
   data: () => ({
     dialogVisible: false,
-    myPic:
-      "http://47.94.111.235:8080/image/lubenwei/2019-03-04/original/IMG_0653.JPG",
     pid: 157
   }),
   props: {
@@ -58,8 +56,11 @@ export default {
   },
   methods: {
     dialog() {
-      this.pid = this.pixel.pid
-      this.dialogVisible = true
+      this.pid = this.pixel.pid;
+      this.dialogVisible = true;
+    },
+    onClose() {
+      // 由于 prop 的单向绑定，这里无法实现数据的重新请求，因此主页数据无法实时更新，一定程度上为了复用牺牲了用户体验
     }
   }
 };
