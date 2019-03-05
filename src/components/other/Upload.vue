@@ -135,7 +135,6 @@ export default {
     },
     // 完成上传的钩子
     upload() {
-      console.log("dfafdasdfadsfasdfasdf");
       this.$api.user
         .addTag({
           pids: this.pids,
@@ -143,6 +142,13 @@ export default {
         })
         .then(res => {
           console.log(res);
+          if (res.data.status = 200){
+            this.$message({
+              type: 'success',
+              message: '作品上传成功'
+            })
+            this.$router.replace('/user-profile')
+          }
         })
         .catch(err => {
           console.log(err);
@@ -153,7 +159,7 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    // 准备上床前的钩子
+    // 准备上传前的钩子，设置参数中的 title 
     ready(file) {
       this.params.title = this.title;
     }

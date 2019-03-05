@@ -2,10 +2,10 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="green" title="Edit Profile" text="Complete your profile">
-          <v-layout row wrap v-for="i in 10" :key="i">
-            <v-flex v-for="i in 12" :key="i" md4>
-              <material-my-card :pixel="pixels[0]"></material-my-card>
+        <material-card color="green" title="作品列表" text="在这里查看并管理您上传的图片">
+          <v-layout row wrap>
+            <v-flex v-for="(pixel,index) of pixels.slice(1)" :key="index" md4>
+              <material-my-card :pixel="pixel"></material-my-card>
             </v-flex>
           </v-layout>
         </material-card>
@@ -49,19 +49,11 @@ export default {
     follow: 0,
     star: 0,
     fans: 0,
-    pixels: [
-      {
-        smallUrl:
-          "http://47.94.111.235:8080/image/lubenwei/2019-03-03/small/cover02.jpg",
-        pid: 100000,
-        views: 100000,
-        stars: 100000,
-        likes: 100000
-      }
-    ]
+    pixels: [{}]
   }),
 
   created: function() {
+    // 请求用户个人信息
     this.$api.user
       .getInfo({
         uid: window.localStorage.uid
@@ -75,6 +67,26 @@ export default {
         this.follow = info.follow;
         this.star = info.star;
         this.fans = info.fans;
+      })
+      .catch(err => {});
+
+    // 请求用户上传的图片
+
+    this.$api.image
+      .getImageListByUid({
+        uid: window.localStorage.uid
+      })
+      .then(res => {
+        for (let data of res.data.imageList) {
+          var pixel = {
+            smallUrl: this.$api.root.getOriginalUrl(data.url),
+            pid: data.iid,
+            views: data.count,
+            stars: data.star,
+            likes: data.thumb
+          };
+          this.pixels.push(pixel);
+        }
       })
       .catch(err => {});
   }

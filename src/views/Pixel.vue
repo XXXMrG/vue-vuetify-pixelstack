@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex v-for="item of pixels" :key="item" md3>
+      <v-flex v-for="(item,index) of pixels.slice(1)" :key="index" md3>
         <material-my-card :pixel="item"></material-my-card>
       </v-flex>
     </v-layout>
@@ -22,15 +22,14 @@ export default {
       .then(res => {
         console.log(res.data.imageList);
         for (let data of res.data.imageList) {
-          console.log(data);
+          this.$api.root.getOriginalUrl(data.url)
           var pixel = {
-            smallUrl: this.$api.root.getUrl(data.url),
+            smallUrl: this.$api.root.getOriginalUrl(data.url),
             pid: data.iid,
             views: data.count,
             stars: data.star,
             likes: data.thumb
           };
-          console.log(pixel);
           this.pixels.push(pixel);
         }
         console.log(this.pixels);

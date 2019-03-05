@@ -13,7 +13,7 @@
             <material-card color="info" title="评论列表">
               <v-list three-line>
                 <template v-for="(item, index) in comments">
-                  <v-subheader v-if="item.username" :key="item.username">{{ item.username }}:</v-subheader>
+                  <v-subheader v-if="item.username" :key="index">{{ item.username }}:</v-subheader>
                   <v-list-tile :key="item.username" avatar>
                     <v-list-tile-content>
                       <v-list-group v-text="item.content"></v-list-group>
@@ -84,7 +84,7 @@ export default {
       {
         username: "xxx",
         content: "卢本伟牛逼卢本伟牛逼卢本伟牛逼卢本伟牛逼卢本伟牛逼卢本伟牛",
-        cdate: "卢本伟牛逼",
+        cdate: "卢本伟牛逼"
       }
     ]
   }),
@@ -94,7 +94,36 @@ export default {
   methods: {
     // 提交新评论
     submit() {
-      this.input;
+      this.$api.image
+        .addComment({
+          iid: this.pid,
+          uid: window.localStorage.uid,
+          content: this.input
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.$message({
+              type: 'success',
+              message: "评论成功"
+            })
+            this.getComment();
+            this.input = "";
+          }
+        })
+        .catch(err => {});
+    },
+    //
+    getComment() {
+      // 读取图片评论列表
+      this.$api.image
+        .getCommentsByiid({
+          iid: this.pid
+        })
+        .then(res => {
+          console.log(res);
+          this.comments = res.data.comments;
+        })
+        .catch(err => {});
     }
   },
 
@@ -105,21 +134,13 @@ export default {
         iid: this.pid
       })
       .then(res => {
+        console.log(res);
         var data = res.data;
         data.url = this.$api.root.getUrl(data.url);
         this.detail = data;
       })
       .catch(err => {});
-    // 读取图片评论列表
-    this.$api.image
-      .getCommentsByiid({
-        iid: this.pid
-      })
-      .then(res => {
-        console.log(res)
-        this.comments = res.data.comments
-      })
-      .catch(err => {});
+    this.getComment();
   }
 };
 </script>

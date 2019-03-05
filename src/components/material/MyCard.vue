@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex md12>
         <v-card>
-          <v-img :src="pixel.smallUrl" @click="dialog"></v-img>
+          <v-img :src="pixel.smallUrl" @click="dialog" aspect-ratio="1"></v-img>
           <v-layout row wrap class="caption">
             <v-flex md4>
               <v-icon small>mdi-eye-outline</v-icon>
