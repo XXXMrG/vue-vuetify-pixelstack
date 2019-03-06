@@ -10,7 +10,7 @@
             <p class="headline">{{detail.title}}</p>
           </v-flex>
           <v-flex md8>
-            <material-card color="info" title="评论列表">
+            <material-card color="commentinfo" title="评论列表">
               <v-list three-line>
                 <template v-for="(item, index) in comments">
                   <v-subheader v-if="item.username" :key="index">{{ item.username }}:</v-subheader>
@@ -20,8 +20,8 @@
                       <v-list-tile-sub-title v-text="item.cdate" class="text-xs-right"></v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                      <v-btn icon ripple @click="report" color="tertiary" flat>
-                        <v-icon>mdi-alert-octagon</v-icon>
+                      <v-btn icon ripple @click="report(item.cid)" color="tertiary" flat>
+                        <v-icon>mdi-alert-circle</v-icon>
                       </v-btn>
                     </v-list-tile-action>
                   </v-list-tile>
@@ -29,7 +29,7 @@
                 </template>
               </v-list>
               <v-text-field label="键入评论" v-model="input" :rules="rules" @keyup.enter="submit"></v-text-field>
-              <v-btn color="pink" @click="submit">
+              <v-btn color="cButton" @click="submit">
                 <v-icon>edit</v-icon>评论该作品
               </v-btn>
             </material-card>
@@ -66,7 +66,7 @@
               <v-flex md4>作者</v-flex>
               <v-flex md8>
                 <div>
-                  <router-link :to="authorPage">{{detail.author}}</router-link>
+                  <router-link :to="authorPage" >{{detail.author}}</router-link>
                 </div>
               </v-flex>
               <v-flex md4>时间</v-flex>
@@ -75,7 +75,7 @@
               <v-flex md8>:{{detail.count}}</v-flex>
               <v-flex md12>
                 <template v-if="isOwner">
-                  <v-btn block color="error" dark @click="delPic">删除该作品</v-btn>
+                  <v-btn block color="pDelete" dark @click="delPic">删除该作品</v-btn>
                 </template>
               </v-flex>
             </v-layout>
@@ -107,7 +107,8 @@ export default {
       {
         username: "",
         content: "",
-        cdate: ""
+        cdate: "",
+        cid: ""
       }
     ],
     isOwner: false,
@@ -133,12 +134,16 @@ export default {
         })
         .then(res => {
           // 通过点击的用户 id 来构造动态路由
-          this.authorPage = "/user-profile/" + res.data.uid + "/type/info"
+          this.authorPage = "/user-profile/" + res.data.uid + "/type/info";
           if (res.data.uid.toString() === window.localStorage.uid) {
             this.isOwner = true;
           }
         })
         .catch(err => {});
+        if (window.localStorage.authority == "root" || window.localStorage.authority == "admin"){
+          this.isOwner = true
+        }
+
     },
     // 提交新评论
     submit() {
@@ -174,7 +179,15 @@ export default {
         .catch(err => {});
     },
     // 举报该条不当评论
-    report() {},
+    report(cid) {
+      this.$api.image.report({
+        cid: cid
+      }).then(res => {
+        console.log(res)
+      }).cajtch(err => {
+
+      })
+    },
     //
     onChange(item) {
       switch (item) {
@@ -222,7 +235,7 @@ export default {
             })
             .then(res => {
               console.log(res);
-              this.$router.replace("/user-profile");
+              this.$router.replace("/pixel");
               location.reload();
               this.$message({
                 type: "success",

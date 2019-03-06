@@ -123,7 +123,7 @@ import {
 export default {
   data: () => ({
     colors: [
-      'primary',
+      'myprimary',
       'info',
       'success',
       'warning',

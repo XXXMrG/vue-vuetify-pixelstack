@@ -60,7 +60,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'secondary'
+      default: "myprimary"
     },
     elevation: {
       type: [Number, String],

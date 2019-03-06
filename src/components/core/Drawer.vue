@@ -21,25 +21,13 @@
         <v-list-tile v-if="responsive">
           <v-text-field class="purple-input search-input" label="Search..." color="purple"/>
         </v-list-tile>
-        <v-list-tile
-          v-for="(link, i) in links"
-          :key="i"
-          :to="link.to"
-          :active-class="color"
-          avatar
-          class="v-list-item"
-        >
-          <v-list-tile-action>
-            <v-icon>{{ link.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title v-text="link.text"/>
-        </v-list-tile>
-        <template v-if="authority == 'root' ">
+
+        <template v-if="authority == 'root' || authority == 'admin' ">
           <v-list-tile
             v-for="(adminlink, i) in adminlinks"
             :key="i"
             :to="adminlink.to"
-            :active-class="color"
+            active-class="myprimary"
             avatar
             class="v-list-item"
           >
@@ -47,6 +35,36 @@
               <v-icon>{{adminlink.icon}}</v-icon>
             </v-list-tile-action>
             <v-list-tile-title v-text="adminlink.text"/>
+          </v-list-tile>
+        </template>
+        <template v-if="authority == 'user'">
+          <v-list-tile
+            v-for="(link, i) in userlinks"
+            :key="i"
+            :to="link.to"
+            active-class="myprimary"
+            avatar
+            class="v-list-item"
+          >
+            <v-list-tile-action>
+              <v-icon>{{ link.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title v-text="link.text"/>
+          </v-list-tile>
+        </template>
+        <template v-if="!authority">
+          <v-list-tile
+            v-for="(link, i) in visitorlinks"
+            :key="i"
+            :to="link.to"
+            active-class="myprimary"
+            avatar
+            class="v-list-item"
+          >
+            <v-list-tile-action>
+              <v-icon>{{ link.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title v-text="link.text"/>
           </v-list-tile>
         </template>
         <!-- deleted the upgrade to pro at 2019/2/27-->
@@ -64,22 +82,15 @@ export default {
     logo: "./img/vuetifylogo.png",
     adminlinks: [
       {
-        to: "/admin-user",
-        icon: "mdi-account",
-        text: "管理用户"
-      }
-    ],
-    links: [
-      {
         // add pixel by keith
         to: "/pixel",
         icon: "mdi-atom",
         text: "Pixel"
       },
       {
-        to: "/dashboard",
-        icon: "mdi-view-dashboard",
-        text: "Dashboard"
+        to: "/admin-user",
+        icon: "mdi-account",
+        text: "用户管理"
       },
       {
         to: "/user-profile/" + window.localStorage.uid + "/type/info",
@@ -87,29 +98,36 @@ export default {
         text: "User Profile"
       },
       {
-        to: "/table-list",
-        icon: "mdi-clipboard-outline",
-        text: "Table List"
+        to: "/admin-comment",
+        icon: "mdi-comment-multiple-outline",
+        text: "评论管理"
+      }
+    ],
+    userlinks: [
+      {
+        // add pixel by keith
+        to: "/pixel",
+        icon: "mdi-atom",
+        text: "Pixel"
       },
       {
-        to: "/typography",
-        icon: "mdi-format-font",
-        text: "Typography"
-      },
+        to: "/user-profile/" + window.localStorage.uid + "/type/info",
+        icon: "mdi-account",
+        text: "User Profile"
+      }
+    ],
+    visitorlinks: [
       {
-        to: "/icons",
-        icon: "mdi-chart-bubble",
-        text: "Icons"
+        // add pixel by keith
+        to: "/pixel",
+        icon: "mdi-atom",
+        text: "Pixel"
       },
+
       {
-        to: "/maps",
-        icon: "mdi-map-marker",
-        text: "Maps"
-      },
-      {
-        to: "/notifications",
-        icon: "mdi-bell",
-        text: "Notifications"
+        to: "/user-profile/" + window.localStorage.uid + "/type/info",
+        icon: "mdi-account",
+        text: "User Profile"
       },
       {
         // add login by keith

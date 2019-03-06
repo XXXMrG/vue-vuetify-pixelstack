@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex v-for="(item,index) of pixels.slice(1)" :key="index" xs3>
+      <v-flex v-for="(item,index) of pixels.slice(1)" :key="index" xs2>
         <material-my-card :pixel="item"></material-my-card>
       </v-flex>
     </v-layout>

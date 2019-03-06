@@ -2,7 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="green" title="作品列表" text="在这里查看并管理您上传的图片">
+        <material-card color="myinfo" title="作品列表" text="在这里查看并管理您上传的图片">
           <v-layout row wrap>
             <v-flex v-for="(pixel,index) of pixels.slice(1)" :key="index" md4>
               <material-my-card :pixel="pixel"></material-my-card>
@@ -22,18 +22,18 @@
             <p class="card-description font-weight-light">{{about}}</p>
             <v-card-text class="body-2">
               <router-link :to="followPath">
-                <span>Follow: {{follow}}</span>
+                <span color="lightinfo" >Follow: {{follow}}</span>
               </router-link>
               <el-button type="text" class="items" @click="goStar">
-                <span>Star: {{star}}</span>
+                <span color="lightinfo" >Star: {{star}}</span>
               </el-button>
               <router-link :to="fansPath" class="items">
-                <span>Fans: {{fans}}</span>
+                <span color="lightinfo" >Fans: {{fans}}</span>
               </router-link>
             </v-card-text>
             <v-btn
               v-if="isOwner"
-              color="success"
+              color="darkinfo"
               round
               class="font-weight-light"
               to="/edit-profile"
@@ -41,12 +41,12 @@
             <template v-else>
               <v-btn
                 v-if="isFollow"
-                color="success"
+                color="darkinfo"
                 round
                 class="font-weight-light"
                 @click="goFollow"
               >Unfollowed</v-btn>
-              <v-btn v-else color="success" round class="font-weight-light" @click="goFollow">Follow</v-btn>
+              <v-btn v-else color="darkinfo" round class="font-weight-light" @click="goFollow">Follow</v-btn>
             </template>
           </v-card-text>
         </material-card>
@@ -159,8 +159,8 @@ export default {
         .catch(err => {});
     },
     goStar() {
-      this.$router.replace(this.starPath)
-      this.pixels = []
+      this.$router.replace(this.starPath);
+      this.pixels = [];
       this.getPic();
     },
     judge() {

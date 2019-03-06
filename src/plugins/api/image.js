@@ -53,6 +53,10 @@ const image = {
         return axios.get(`${base.pro}/image/myStars`, {
             params: params
         })
+    },
+    // 👮🏿‍♀️ 评论
+    report(params) {
+        return axios.post(`${base.pro}/Comment/report`, qs.stringify(params))
     }
 }
 

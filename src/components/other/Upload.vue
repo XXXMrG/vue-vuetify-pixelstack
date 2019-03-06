@@ -5,7 +5,7 @@
         <material-card title="上传作品">
           <el-row>
             <el-col :span="12" :offset="5">
-              <v-text-field v-model="title" label="键入本组作品的标题"></v-text-field>
+              <v-text-field v-model="title" label="键入本组作品的标题" color="textField"></v-text-field>
             </el-col>
             <el-col :span="12" :offset="7">
               <el-upload
@@ -46,6 +46,7 @@
             <el-col :span="12" :offset="5">
               <div class="div-add-tag">
                 <v-text-field
+                color="textField"
                   label="添加新标签，按回车确定"
                   v-model="inputValue"
                   @keyup.enter="handleInputConfirm"
@@ -147,7 +148,7 @@ export default {
               type: 'success',
               message: '作品上传成功'
             })
-            this.$router.replace('/user-profile')
+            this.$router.replace('/pixel')
           }
         })
         .catch(err => {

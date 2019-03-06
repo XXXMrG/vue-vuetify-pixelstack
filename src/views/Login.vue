@@ -2,22 +2,22 @@
   <v-container>
     <v-layout justify-center>
       <v-flex xs12 sm10 md8>
-        <material-card color="info" title="登录 PixelStack" text="fuck the world">
+        <material-card color="myinfo" title="登录 PixelStack" text="fuck the world">
           <v-form ref="form">
             <v-container justify-start>
               <v-layout wrap row>
                 <v-flex md6 offset-md1>
                   <v-text-field
                     label="输入用户名"
-                    class="purple-input"
+                    color="myprimary"
                     v-model="username"
                     :rules="nameRules"
                   />
                 </v-flex>
                 <v-flex md6 offset-md1>
                   <v-text-field
+                    color="myprimary"
                     label="输入密码"
-                    class="purple-input"
                     type="password"
                     v-model="pwd"
                     :rules="pwdRules"
@@ -31,7 +31,7 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="login()">登录</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="myprimary" @click="login()">登录</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -66,8 +66,8 @@ export default {
       if (this.$refs.form.validate()) {
         console.log("yyyy");
         this.$api.user.test().then(res => {
-          console.log(res)
-        })
+          console.log(res);
+        });
       }
     },
 
@@ -89,7 +89,7 @@ export default {
                   message: "登录成功"
                 });
                 // 重新渲染侧边栏
-                location.reload()
+                location.reload();
                 this.$router.replace({
                   path: "/pixel"
                 });
@@ -102,7 +102,7 @@ export default {
             console.log(err);
           });
       }
-    },
+    }
   }
 };
 </script>

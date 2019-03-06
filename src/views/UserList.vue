@@ -26,16 +26,13 @@
             <h6 class="category text-gray font-weight-thin mb-3">{{email}}</h6>
             <h4 class="card-title font-weight-light">{{username}}</h4>
             <p class="card-description font-weight-light">{{about}}</p>
-            <v-card-text class="body-2">
-              <router-link to="/pixel">
-                <span>Follow: {{follow}}</span>
-              </router-link>
-              <router-link to="/pixel" class="items">
-                <span>Star: {{star}}</span>
-              </router-link>
-              <router-link to="/pixel" class="items">
-                <span>Fans: {{fans}}</span>
-              </router-link>
+            <v-card-text color="lightinfo">
+              <v-layout row wrap>
+                <v-flex md4>
+                <span>Follow: {{follow}}</span></v-flex>
+                <v-flex md4><span>Star: {{star}}</span></v-flex>
+                <v-flex md4><span>Fans: {{fans}}</span></v-flex>
+              <v-btn block color="secondary" dark>返回用户主页</v-btn></v-layout>
             </v-card-text>
           </v-card-text>
         </material-card>

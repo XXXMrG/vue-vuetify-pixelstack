@@ -2,14 +2,14 @@
   <v-container>
     <v-layout justify-center>
       <v-flex xs12 sm10 md8>
-        <material-card color="info" title="注册 PixelStack" text="fuck the world">
+        <material-card color="myinfo"  title="注册 PixelStack" text="fuck the world">
           <v-form ref="form">
             <v-container justify-start>
               <v-layout wrap row>
                 <v-flex md6 offset-md1>
                   <v-text-field
                     label="输入用户名"
-                    class="purple-input"
+                  color="myprimary"
                     :counter="max"
                     :rules="userRules"
                     v-model="username"
@@ -18,7 +18,7 @@
                 <v-flex md6 offset-md1>
                   <v-text-field
                     label="输入密码"
-                    class="purple-input"
+                  color="myprimary"
                     type="password"
                     :rules="rules"
                     v-model="pwd"
@@ -27,7 +27,7 @@
                 <v-flex md6 offset-md1>
                   <v-text-field
                     label="重复输入密码"
-                    class="purple-input"
+                  color="myprimary"
                     type="password"
                     :rules="rules"
                     v-model="model"
@@ -39,7 +39,7 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="success" @click="register()">注册</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="myprimary" @click="register()">注册</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
