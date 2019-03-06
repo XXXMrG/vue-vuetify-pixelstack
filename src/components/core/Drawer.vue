@@ -82,7 +82,7 @@ export default {
         text: "Dashboard"
       },
       {
-        to: "/user-profile/" + window.localStorage.uid,
+        to: "/user-profile/" + window.localStorage.uid + "/type/info",
         icon: "mdi-account",
         text: "User Profile"
       },

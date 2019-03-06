@@ -133,7 +133,7 @@ export default {
         })
         .then(res => {
           // 通过点击的用户 id 来构造动态路由
-          this.authorPage = "/user-profile/" + res.data.uid;
+          this.authorPage = "/user-profile/" + res.data.uid + "/type/info"
           if (res.data.uid.toString() === window.localStorage.uid) {
             this.isOwner = true;
           }

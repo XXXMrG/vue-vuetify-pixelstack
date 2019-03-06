@@ -54,7 +54,7 @@ export default [
   },
   {
     // 为该页面增加动态路由，从而提高页面复用
-    path: '/user-profile/:id',
+    path: '/user-profile/:id/type/:type',
     name: 'User Profile',
     view: 'UserProfile'
   },

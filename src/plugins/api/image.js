@@ -47,6 +47,12 @@ const image = {
         return axios.get(`${base.pro}/image/isThumb`, {
             params: params
         })
+    },
+    // 请求图片收藏列表
+    myStars(params) {
+        return axios.get(`${base.pro}/image/myStars`, {
+            params: params
+        })
     }
 }
 

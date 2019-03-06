@@ -24,9 +24,9 @@
               <router-link :to="followPath">
                 <span>Follow: {{follow}}</span>
               </router-link>
-              <router-link to="/pixel" class="items">
+              <el-button type="text" class="items" @click="goStar">
                 <span>Star: {{star}}</span>
-              </router-link>
+              </el-button>
               <router-link :to="fansPath" class="items">
                 <span>Fans: {{fans}}</span>
               </router-link>
@@ -69,6 +69,7 @@ export default {
     isOwner: false,
     followPath: "",
     fansPath: "",
+    starPath: "",
     isFollow: false
   }),
 
@@ -76,25 +77,9 @@ export default {
     this.followPath = "/user/" + this.$route.params.id + "/type/follow";
     this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
     this.isOwner = this.$route.params.id === window.localStorage.uid;
-    this.getData()
-    // 请求用户上传的图片
-    this.$api.image
-      .getImageListByUid({
-        uid: this.$route.params.id
-      })
-      .then(res => {
-        for (let data of res.data.imageList) {
-          var pixel = {
-            smallUrl: this.$api.root.getOriginalUrl(data.url),
-            pid: data.iid,
-            views: data.count,
-            stars: data.star,
-            likes: data.thumb
-          };
-          this.pixels.push(pixel);
-        }
-      })
-      .catch(err => {});
+    this.starPath = "/user-profile/" + this.$route.params.id + "/type/star";
+    this.getData();
+    this.getPic();
   },
 
   methods: {
@@ -117,6 +102,49 @@ export default {
         })
         .catch(err => {});
     },
+    getPic() {
+      switch (this.$route.params.type) {
+        case "info":
+          // 请求用户上传的图片
+          this.$api.image
+            .getImageListByUid({
+              uid: this.$route.params.id
+            })
+            .then(res => {
+              for (let data of res.data.imageList) {
+                var pixel = {
+                  smallUrl: this.$api.root.getOriginalUrl(data.url),
+                  pid: data.iid,
+                  views: data.count,
+                  stars: data.star,
+                  likes: data.thumb
+                };
+                this.pixels.push(pixel);
+              }
+            })
+            .catch(err => {});
+          break;
+        case "star":
+          this.$api.image
+            .myStars({
+              uid: this.$route.params.id
+            })
+            .then(res => {
+              for (let data of res.data.starList) {
+                var pixel = {
+                  smallUrl: this.$api.root.getOriginalUrl(data.url),
+                  pid: data.iid,
+                  views: data.count,
+                  stars: data.star,
+                  likes: data.thumb
+                };
+                this.pixels.push(pixel);
+              }
+            })
+            .catch(err => {});
+          break;
+      }
+    },
     goFollow() {
       this.$api.user
         .goFollow({
@@ -126,11 +154,15 @@ export default {
         })
         .then(res => {
           console.log(res);
-          this.getData()
+          this.getData();
         })
         .catch(err => {});
     },
-
+    goStar() {
+      this.$router.replace(this.starPath)
+      this.pixels = []
+      this.getPic();
+    },
     judge() {
       this.$api.user
         .followRelate({
