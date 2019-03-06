@@ -31,6 +31,7 @@
                     type="password"
                     :rules="rules"
                     v-model="model"
+                    @keyup.enter="register"
                   />
                 </v-flex>
                 <v-flex md6 offset-md6>
@@ -39,7 +40,7 @@
                   </router-link>
                 </v-flex>
                 <v-flex xs12 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" color="myprimary" @click="register()">注册</v-btn>
+                  <v-btn class="mx-0 font-weight-light" color="myprimary" @click="register">注册</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>

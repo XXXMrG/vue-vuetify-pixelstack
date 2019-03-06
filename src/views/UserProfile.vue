@@ -2,7 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="myinfo" title="作品列表" text="在这里查看并管理您上传的图片">
+        <material-card color="myinfo" :title="title" :text="subtitle">
           <v-layout row wrap>
             <v-flex v-for="(pixel,index) of pixels.slice(1)" :key="index" md4>
               <material-my-card :pixel="pixel"></material-my-card>
@@ -70,7 +70,9 @@ export default {
     followPath: "",
     fansPath: "",
     starPath: "",
-    isFollow: false
+    isFollow: false,
+    title: "",
+    subtitle: ""
   }),
 
   created: function() {
@@ -78,11 +80,29 @@ export default {
     this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
     this.isOwner = this.$route.params.id === window.localStorage.uid;
     this.starPath = "/user-profile/" + this.$route.params.id + "/type/star";
+    this.getTitle()
     this.getData();
     this.getPic();
   },
 
+  watch: {
+    followPath: "getData"
+  },
+
   methods: {
+    getTitle(){
+      // 判断用户当前列表
+      switch (this.$route.params.type){
+        case "info":
+          this.title = "作品列表"
+          this.subtitle = "在这里查看并管理您的作品"
+          break;
+        case "star":
+          this.title = "收藏列表"
+          this.subtitle = "在这里查看并管理您收藏的作品"
+          break;
+      }
+    },
     getData() {
       // 请求用户个人信息
       this.$api.user

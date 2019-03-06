@@ -62,6 +62,10 @@ export default [
     path: '/admin-comment',
     name: '管理评论',
     view: 'AdminComment'
+  },{
+    path: '/search/:type',
+    name: '搜索作品',
+    view: 'Search'
   }
 
 ]

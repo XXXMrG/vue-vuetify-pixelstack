@@ -57,6 +57,22 @@ const image = {
     // 👮🏿‍♀️ 评论
     report(params) {
         return axios.post(`${base.pro}/Comment/report`, qs.stringify(params))
+    },
+    // 根据 🏷 返回图片
+    getListByTagName(params) {
+        return axios.get(`${base.pro}/image/getListByTagName`, {
+            params: params
+        })
+    },
+    // 修改标题
+    updateTitle(params) {
+        return axios.post(`${base.pro}/image/updateTitle`, qs.stringify(params))
+    },
+    // 关键字搜索图片
+    getListBySearch(params) {
+        return axios.get(`${base.pro}/image/getListBySearch`, {
+            params: params
+        })
     }
 }
 

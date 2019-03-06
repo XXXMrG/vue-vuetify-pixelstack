@@ -5,15 +5,25 @@
         <material-card title="评论管理">
           <v-layout row wrap justify-start>
             <v-flex v-for="item in comments" :key="item" xs8 offset-xs1>
-              <material-card :title="item.cid">
+              <material-card :title="'评论 ID：' + item.cid">
                 <v-layout row wrap justify-start>
                   <v-flex xs2>{{item.username}}:</v-flex>
                   <v-flex xs10 offset-xs1>{{item.content}}</v-flex>
                   <v-flex xs2 offset-xs10>{{item.cdate}}</v-flex>
-                  <v-flex xs2 offset-xs9>
-                    <v-btn block depressed color="pink"></v-btn>
+                  <v-flex xs4 offset-xs8>
+                    <v-btn
+                      block
+                      depressed
+                      color="pink"
+                      @click="dealWithReport(true, item.cid)"
+                    >确认违规，删除评论</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn block depressed color="lightblue"></v-btn>
+                    <v-btn
+                      block
+                      depressed
+                      color="lightblue"
+                      @click="dealWithReport(false, item.cid)"
+                    >举报无效，打回举报</v-btn>
                   </v-flex>
                 </v-layout>
               </material-card>
@@ -46,6 +56,30 @@ export default {
           this.comments = res.data.comments;
         })
         .catch(err => {});
+    },
+    dealWithReport(isRight, cid) {
+      this.$confirm("请确认处理操作 ？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$api.admin
+            .dealWithReport({
+              cid: cid,
+              reportRight: isRight
+            })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "处理成功"
+              });
+              console.log(res);
+              this.getList();
+            })
+            .catch(err => {});
+        })
+        .catch(() => {});
     }
   },
 

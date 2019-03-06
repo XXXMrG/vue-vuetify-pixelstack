@@ -8,6 +8,13 @@
           </v-flex>
           <v-flex xs12>
             <p class="headline">{{detail.title}}</p>
+            <v-text-field
+              v-if="isOwner"
+              class="headline"
+              label="修改作品标题"
+              @keyup.enter="changeTitle"
+              v-model="newTitle"
+            ></v-text-field>
           </v-flex>
           <v-flex md8>
             <material-card color="commentinfo" title="评论列表">
@@ -28,7 +35,7 @@
                   <v-divider :key="index" :inset="true"></v-divider>
                 </template>
               </v-list>
-              <v-text-field label="键入评论" v-model="input" :rules="rules" @keyup.enter="submit"></v-text-field>
+              <v-textarea label="键入评论" v-model="input" :rules="rules" @keyup.enter="submit"></v-textarea>
               <v-btn color="cButton" @click="submit">
                 <v-icon>edit</v-icon>评论该作品
               </v-btn>
@@ -59,17 +66,19 @@
               <v-flex md1>
                 <v-icon small>loyalty</v-icon>
               </v-flex>
-              <v-flex v-for="tag in detail.tags" :key="tag" md4>{{tag}}</v-flex>
+              <v-flex v-for="tag in detail.tags" :key="tag" md4>
+                <router-link :to="/search/ + tag">{{tag}}</router-link>
+              </v-flex>
               <v-flex md12>
                 <v-divider></v-divider>
               </v-flex>
               <v-flex md4>作者</v-flex>
               <v-flex md8>
                 <div>
-                  <router-link :to="authorPage" >{{detail.author}}</router-link>
+                  <router-link :to="authorPage">{{detail.author}}</router-link>
                 </div>
               </v-flex>
-              <v-flex md4>时间</v-flex>
+              <v-flex md4>上传时间</v-flex>
               <v-flex md8>:{{detail.upload}}</v-flex>
               <v-flex md4>浏览量</v-flex>
               <v-flex md8>:{{detail.count}}</v-flex>
@@ -112,7 +121,8 @@ export default {
       }
     ],
     isOwner: false,
-    authorPage: ""
+    authorPage: "",
+    newTitle: ""
   }),
   props: {
     pid: Number
@@ -140,10 +150,12 @@ export default {
           }
         })
         .catch(err => {});
-        if (window.localStorage.authority == "root" || window.localStorage.authority == "admin"){
-          this.isOwner = true
-        }
-
+      if (
+        window.localStorage.authority == "root" ||
+        window.localStorage.authority == "admin"
+      ) {
+        this.isOwner = true;
+      }
     },
     // 提交新评论
     submit() {
@@ -180,13 +192,25 @@ export default {
     },
     // 举报该条不当评论
     report(cid) {
-      this.$api.image.report({
-        cid: cid
-      }).then(res => {
-        console.log(res)
-      }).cajtch(err => {
-
+      this.$confirm("确认举报该条评论嘛 ?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
+        .then(() => {
+          this.$api.image
+            .report({
+              cid: cid
+            })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: res.data.message
+              })
+            })
+            .catch(err => {});
+        })
+        .catch(() => {});
     },
     //
     onChange(item) {
@@ -269,9 +293,33 @@ export default {
           this.judge();
         })
         .catch(err => {});
+    },
+    // 更改图片标题
+    changeTitle() {
+      this.$confirm("确定修改图片标题？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$api.image
+            .updateTitle({
+              iid: this.pid,
+              title: this.newTitle
+            })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: res.data.message
+              });
+              this.newTitle = "";
+              this.getImageDetails();
+            })
+            .catch(err => {});
+        })
+        .catch(() => {});
     }
   },
-
   created: function() {
     this.getImageDetails();
     this.getComment();

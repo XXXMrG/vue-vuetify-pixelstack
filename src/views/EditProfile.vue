@@ -2,20 +2,20 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="green" title="Edit Profile" text="Complete your profile">
+        <material-card color="myinfo" title="Edit Profile" text="Complete your profile">
           <v-form ref="form">
             <v-container py-0>
               <v-layout wrap>
                 <v-flex xs12 md4>
-                  <v-text-field class="purple-input" label="User Name" v-model="newName"/>
+                  <v-text-field color="myprimary" label="User Name" v-model="newName"/>
                 </v-flex>
                 <v-flex xs12 md8>
-                  <v-text-field label="Email Address" class="purple-input" v-model="newEmail"/>
+                  <v-text-field label="Email Address" color="myprimary" v-model="newEmail"/>
                 </v-flex>
                 <v-flex xs12 md6>
                   <v-text-field
                     label="New Password"
-                    class="purple-input"
+                    color="myprimary"
                     type="password"
                     hint="修改密码需要重新登录哦"
                     v-model="newPwd"
@@ -24,7 +24,7 @@
                 <v-flex xs12 md6>
                   <v-text-field
                     label="Repeat Password"
-                    class="purple-input"
+                    color="myprimary"
                     type="password"
                     v-model="match"
                     :rules="rules"
@@ -32,7 +32,7 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    class="purple-input"
+                    color="myprimary"
                     label="About Me"
                     value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                     clearable
@@ -43,7 +43,7 @@
                 <v-flex xs12 text-xs-right>
                   <v-btn
                     class="mx-0 font-weight-light"
-                    color="success"
+                    color="myprimary"
                     @click="commit()"
                   >Update Profile</v-btn>
                 </v-flex>
@@ -58,11 +58,9 @@
             <img src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg">
           </v-avatar>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">CEO / CO-FOUNDER</h6>
-            <h4 class="card-title font-weight-light">Alec Thompson</h4>
-            <p
-              class="card-description font-weight-light"
-            >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
+            <h6 class="category text-gray font-weight-thin mb-3">{{this.newName}}</h6>
+            <h4 class="card-title font-weight-light">{{this.newEmail}}</h4>
+            <p class="card-description font-weight-light">{{this.about}}</p>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -132,7 +130,9 @@ export default {
                   message: "信息修改成功！",
                   type: "success"
                 });
-                this.$router.replace("/user-profile");
+                var path =
+                  "/user-profile/" + window.localStorage.uid + "/type/info";
+                this.$router.replace(path);
                 break;
               case "201":
                 this.$message({
@@ -140,9 +140,7 @@ export default {
                   type: "success"
                 });
                 // remove old user info and token
-                localStorage.removeItem("token");
-                localStorage.removeItem("uid");
-                localStorage.removeItem("authority");
+                window.localStorage.clear();
                 this.$router.replace({
                   path: "/login",
                   query: {

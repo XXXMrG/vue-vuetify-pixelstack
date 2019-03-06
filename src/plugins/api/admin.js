@@ -28,6 +28,10 @@ const admin = {
         return axios.get(`${base.pro}/Comment/getReportComment`, {
             params: params
         })
+    },
+    // 处理举报评论
+    dealWithReport(params) {
+        return axios.post(`${base.pro}/admin/dealWithReport`, qs.stringify(params))
     }
 }
 

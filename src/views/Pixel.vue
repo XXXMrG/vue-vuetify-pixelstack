@@ -5,34 +5,47 @@
         <material-my-card :pixel="item"></material-my-card>
       </v-flex>
     </v-layout>
-    <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+    <el-pagination layout="prev, pager, next" background @current-change="pagechange" :page-count="pageCount"></el-pagination>
   </v-container>
 </template>
 <script>
 export default {
   data: () => ({
-    myPic:
-      "http://47.94.111.235:8080/image/lubenwei/2019-03-03/small/cover02.jpg",
-    pixels: [{}]
+    pixels: [{}],
+    pageCount: 0
   }),
 
   created: function() {
-    this.$api.image
-      .getImageList({})
-      .then(res => {
-        for (let data of res.data.imageList) {
-          this.$api.root.getOriginalUrl(data.url)
-          var pixel = {
-            smallUrl: this.$api.root.getOriginalUrl(data.url),
-            pid: data.iid,
-            views: data.count,
-            stars: data.star,
-            likes: data.thumb
-          };
-          this.pixels.push(pixel);
-        }
-      })
-      .catch(err => {});
+    this.getImageList()
+  },
+
+  methods: {
+    getImageList(currentPage = 1) {
+      this.$api.image
+        .getImageList({
+          pageNo: currentPage
+        })
+        .then(res => {
+          this.pageCount = res.data.lastPage
+          for (let data of res.data.imageList) {
+            this.$api.root.getOriginalUrl(data.url);
+            var pixel = {
+              smallUrl: this.$api.root.getOriginalUrl(data.url),
+              pid: data.iid,
+              views: data.count,
+              stars: data.star,
+              likes: data.thumb
+            };
+            this.pixels.push(pixel);
+          }
+        })
+        .catch(err => {});
+    },
+    pagechange(val) {
+      console.log(val);
+      this.pixels = []
+      this.getImageList(val)
+    }
   }
 };
 </script>

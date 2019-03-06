@@ -141,7 +141,10 @@ export default {
       this.$api.admin
         .manageStatus(json)
         .then(res => {
-          console.log(res);
+          this.$message({
+            type: "success",
+            message: res.data.message
+          })
         })
         .catch(err => {
           console.log(err);

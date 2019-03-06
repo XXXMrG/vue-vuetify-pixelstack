@@ -88,19 +88,24 @@ export default {
         text: "Pixel"
       },
       {
+        to: "/search/all",
+        icon: "mdi-image-search",
+        text: "探索"
+      },
+      {
         to: "/admin-user",
         icon: "mdi-account",
         text: "用户管理"
       },
       {
-        to: "/user-profile/" + window.localStorage.uid + "/type/info",
-        icon: "mdi-account",
-        text: "User Profile"
-      },
-      {
         to: "/admin-comment",
         icon: "mdi-comment-multiple-outline",
         text: "评论管理"
+      },
+      {
+        to: "/user-profile/" + window.localStorage.uid + "/type/info",
+        icon: "mdi-account",
+        text: "管理员信息"
       }
     ],
     userlinks: [
@@ -111,9 +116,19 @@ export default {
         text: "Pixel"
       },
       {
+        to: "/search/all",
+        icon: "mdi-image-search",
+        text: "探索"
+      },
+      {
+        to: "/upload",
+        icon: "mdi-cloud-upload",
+        text: "上传新作品"
+      },
+      {
         to: "/user-profile/" + window.localStorage.uid + "/type/info",
         icon: "mdi-account",
-        text: "User Profile"
+        text: "我的作品"
       }
     ],
     visitorlinks: [
@@ -125,15 +140,15 @@ export default {
       },
 
       {
-        to: "/user-profile/" + window.localStorage.uid + "/type/info",
-        icon: "mdi-account",
-        text: "User Profile"
+        to: "/search/all",
+        icon: "mdi-image-search",
+        text: "探索"
       },
       {
         // add login by keith
         to: "/login",
         icon: "mdi-account",
-        text: "Login"
+        text: "登录"
       }
     ],
     responsive: false

@@ -32,7 +32,7 @@
                 <span>Follow: {{follow}}</span></v-flex>
                 <v-flex md4><span>Star: {{star}}</span></v-flex>
                 <v-flex md4><span>Fans: {{fans}}</span></v-flex>
-              <v-btn block color="secondary" dark>返回用户主页</v-btn></v-layout>
+              <v-btn block color="secondary" dark @click="goback">返回用户主页</v-btn></v-layout>
             </v-card-text>
           </v-card-text>
         </material-card>
@@ -104,6 +104,24 @@ export default {
           })
           .catch(res => {});
         break;
+    }
+  },
+
+  methods: {
+    goback() {
+      const path = '/user-profile/' + this.$route.params.id + "/type/info"
+      this.$router.replace(path)
+    },
+    go(username) {
+      this.$api.user.getUid({
+        username: username
+      }).then(res => {
+        var uid = res.data.uid
+        var path = "/user-profile/" + uid + "/type/info"
+        this.$router.replace(path)
+      }).catch(err => {
+
+      })
     }
   }
 };
