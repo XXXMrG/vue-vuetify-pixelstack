@@ -2,7 +2,7 @@
   <v-container>
     <v-layout justify-center>
       <v-flex xs12 sm10 md8>
-        <material-card color="myinfo"  title="注册 PixelStack" text="fuck the world">
+        <material-card color="myinfo"  title="注册 PixelStack" text="加入 PixelStack 来上传并分享您的作品">
           <v-form ref="form">
             <v-container justify-start>
               <v-layout wrap row>

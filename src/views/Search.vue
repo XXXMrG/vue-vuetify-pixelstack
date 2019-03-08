@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <material-card title="探索您感兴趣的作品">
       <v-layout row wrap>
-        <v-flex xs1 offset-xs3>
+        <v-flex xs2 offset-xs2>
           <v-select label="检索依据" :items="types" v-model="type"></v-select>
         </v-flex>
         <v-flex xs6>
@@ -65,7 +65,10 @@ export default {
           search: keywords
         })
         .then(res => {
-          console.log(res);
+          if (res.data.ImageList == null){
+            this.$message.error("没有检索到相关作品，请换个关键字重试")
+            this.keywords = ""
+          }
           this.cutUrl(res.data.ImageList);
         })
         .catch(err => {});

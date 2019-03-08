@@ -22,13 +22,13 @@
             <p class="card-description font-weight-light">{{about}}</p>
             <v-card-text class="body-2">
               <router-link :to="followPath">
-                <span color="lightinfo" >Follow: {{follow}}</span>
+                <span color="lightinfo">Follow: {{follow}}</span>
               </router-link>
               <el-button type="text" class="items" @click="goStar">
-                <span color="lightinfo" >Star: {{star}}</span>
+                <span color="lightinfo">Star: {{star}}</span>
               </el-button>
               <router-link :to="fansPath" class="items">
-                <span color="lightinfo" >Fans: {{fans}}</span>
+                <span color="lightinfo">Fans: {{fans}}</span>
               </router-link>
             </v-card-text>
             <v-btn
@@ -46,7 +46,13 @@
                 class="font-weight-light"
                 @click="goFollow"
               >Unfollowed</v-btn>
-              <v-btn v-else color="darkinfo" round class="font-weight-light" @click="goFollow">Follow</v-btn>
+              <v-btn
+                v-else
+                color="darkinfo"
+                round
+                class="font-weight-light"
+                @click="goFollow"
+              >Follow</v-btn>
             </template>
           </v-card-text>
         </material-card>
@@ -80,7 +86,7 @@ export default {
     this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
     this.isOwner = this.$route.params.id === window.localStorage.uid;
     this.starPath = "/user-profile/" + this.$route.params.id + "/type/star";
-    this.getTitle()
+    this.getTitle();
     this.getData();
     this.getPic();
   },
@@ -90,16 +96,16 @@ export default {
   },
 
   methods: {
-    getTitle(){
+    getTitle() {
       // 判断用户当前列表
-      switch (this.$route.params.type){
+      switch (this.$route.params.type) {
         case "info":
-          this.title = "作品列表"
-          this.subtitle = "在这里查看并管理您的作品"
+          this.title = "作品列表";
+          this.subtitle = "在这里查看并管理您的作品";
           break;
         case "star":
-          this.title = "收藏列表"
-          this.subtitle = "在这里查看并管理您收藏的作品"
+          this.title = "收藏列表";
+          this.subtitle = "在这里查看并管理您收藏的作品";
           break;
       }
     },
@@ -180,6 +186,7 @@ export default {
     },
     goStar() {
       this.$router.replace(this.starPath);
+      this.getTitle();
       this.pixels = [];
       this.getPic();
     },

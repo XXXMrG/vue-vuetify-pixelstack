@@ -13,7 +13,7 @@
       <v-layout class="fill-height" tag="v-list" column>
         <v-list-tile avatar>
           <v-list-tile-avatar color="white">
-            <v-img :src="logo" height="34" contain/>
+            <v-img src="https://img.icons8.com/office/16/000000/minecraft-diamond.png" height="34" contain/>
           </v-list-tile-avatar>
           <v-list-tile-title class="title">Pixel Stack</v-list-tile-title>
         </v-list-tile>

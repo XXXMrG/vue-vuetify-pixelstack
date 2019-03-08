@@ -7,9 +7,9 @@
             <v-flex v-for="item in comments" :key="item" xs8 offset-xs1>
               <material-card :title="'评论 ID：' + item.cid">
                 <v-layout row wrap justify-start>
-                  <v-flex xs2>{{item.username}}:</v-flex>
-                  <v-flex xs10 offset-xs1>{{item.content}}</v-flex>
-                  <v-flex xs2 offset-xs10>{{item.cdate}}</v-flex>
+                  <v-flex xs2>评论用户：{{item.username}}</v-flex>
+                  <v-flex xs10 offset-xs1>评论内容：{{item.content}}</v-flex>
+                  <v-flex xs4 offset-xs9>评论时间：{{item.cdate}}</v-flex>
                   <v-flex xs4 offset-xs8>
                     <v-btn
                       block
