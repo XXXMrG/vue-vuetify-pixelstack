@@ -59,8 +59,15 @@ chrome 是可以关闭跨域校验的，命令行启动的时候加个参数就�
 ## Reference
 
 
+designed by https://github.com/creativetimofficial/vuetify-material-dashboard
+
+
 [vue中Axios的封装和API接口的管理（更新） - 掘金](https://juejin.im/post/5b55c118f265da0f6f1aa354)
+
 [Vue生命周期详解+对应代码解析 - 掘金](https://juejin.im/post/5aacfdfa51882555850753b5)
+
 [自我理解——啃英文的vuetify（问题很多，有待验证）](https://xudany.github.io/vuetify/2017/09/15/%E8%87%AA%E6%88%91%E7%90%86%E8%A7%A3-%E5%95%83%E8%8B%B1%E6%96%87%E7%9A%84vuetify-%E9%97%AE%E9%A2%98%E5%BE%88%E5%A4%9A-%E6%9C%89%E5%BE%85%E9%AA%8C%E8%AF%81/)
+
 [vuetify 栅格系统](https://vuetifyjs.com/zh-Hans/framework/grid-lists)
+
 [HTTP访问控制（CORS） - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
