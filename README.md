@@ -2,6 +2,15 @@
 #JavaScript/vue
 - - - -
 
+## install
+
+* make sure your node version 10.0+
+* npm install
+* npm run dev // 开发环境
+* npm run build //构建生产环境，会在当前目录的 dist 文件夹下构建体积最小的生产版本，可以使用 serve 等本地服务工具直接部署访问
+
+
+
 ## 技术栈
 * vue.js 核心框架
 * vue-CLI 官方提供的脚手架工具，用于快速生成项目框架，方便项目配置和调试
