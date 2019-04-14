@@ -45,10 +45,6 @@ export default [
     view: 'AdminUser'
   },
   {
-    path: '/dashboard',
-    view: 'Dashboard'
-  },
-  {
     path: '/user/:id/type/:type',
     view: 'UserList'
   },
