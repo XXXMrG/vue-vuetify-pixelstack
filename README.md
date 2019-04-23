@@ -1,5 +1,4 @@
 # vue-vuetify-pixelstack
-- - - -
 
 ## 主要界面
 
