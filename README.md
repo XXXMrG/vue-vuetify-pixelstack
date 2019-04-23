@@ -1,5 +1,4 @@
-# vue-vuetify-pixelstack 项目梳理
-#JavaScript/vue
+# vue-vuetify-pixelstack
 - - - -
 
 ## 主要界面
