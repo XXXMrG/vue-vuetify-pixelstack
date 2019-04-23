@@ -2,6 +2,14 @@
 #JavaScript/vue
 - - - -
 
+## 主要界面
+
+![5cbeadca37494.png](https://i.loli.net/2019/04/23/5cbeadca37494.png)
+
+![5cbeae0435e93.png](https://i.loli.net/2019/04/23/5cbeae0435e93.png)
+
+![5cbeae59aad61.png](https://i.loli.net/2019/04/23/5cbeae59aad61.png)
+
 ## install
 
 * make sure your node version 10.0+
