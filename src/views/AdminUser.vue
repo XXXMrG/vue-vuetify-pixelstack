@@ -12,7 +12,7 @@
               <v-tab class="mr-3">
                 <v-icon class="mr-2">mdi-code-tags</v-icon>Admin
               </v-tab>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn small color="pink" bottom @click="dialogVisible = true">
                 <v-icon>edit</v-icon>添加管理员
               </v-btn>
@@ -25,7 +25,7 @@
               append-icon="mdi-account-search"
               single-line
               hide-details
-            ></v-text-field>
+            />
           </v-flex>
           <v-tabs-items v-model="tabs">
             <v-tab-item v-for="n in 2" :key="n">
@@ -36,7 +36,7 @@
                 <template slot="items" slot-scope="{ item }">
                   <td>{{ item.uid }}</td>
                   <td>
-                    <router-link :to="getPath(item.uid)">{{item.username}}</router-link>
+                    <router-link :to="getPath(item.uid)">{{ item.username }}</router-link>
                   </td>
                   <td>{{ item.email }}</td>
                   <td>{{ item.authority }}</td>
@@ -44,7 +44,7 @@
                     <v-edit-dialog lazy @save="save(item.uid, item.status)">
                       {{ item.status }}
                       <template v-slot:input>
-                        <v-select v-model="item.status" :items="status" label="封禁或解封账户"></v-select>
+                        <v-select v-model="item.status" :items="status" label="封禁或解封账户"/>
                       </template>
                     </v-edit-dialog>
                   </td>
@@ -59,16 +59,22 @@
             </v-tab-item>
           </v-tabs-items>
         </material-card>
-        <el-dialog title="增加管理员" :visible.sync="dialogVisible">
+        <el-dialog :visible.sync="dialogVisible" title="增加管理员">
           <v-layout row wrap>
             <v-flex md6 offset-md3>
-              <v-text-field color="myinfo" label="输入新管理员用户名" v-model="adminname"></v-text-field>
+              <v-text-field v-model="adminname" color="myinfo" label="输入新管理员用户名"/>
             </v-flex>
             <v-flex md6 offset-md3>
-              <v-text-field color="myinfo" label="输入新管理员邮箱" v-model="adminEmail"></v-text-field>
+              <v-text-field v-model="adminEmail" color="myinfo" label="输入新管理员邮箱"/>
             </v-flex>
             <v-flex md6 offset-md3>
-              <v-text-field color="myinfo" label="设置密码" v-model="adminpwd" type="password" @keyup.enter="create"></v-text-field>
+              <v-text-field
+                v-model="adminpwd"
+                color="myinfo"
+                label="设置密码"
+                type="password"
+                @keyup.enter="create"
+              />
             </v-flex>
             <v-flex md6 offset-md3>
               <v-btn block color="pink" @click="create">新建管理员</v-btn>
@@ -113,20 +119,23 @@ export default {
         value: "status"
       }
     ],
+    // 用户信息数据格式
     users: [
       {
-        uid: "Dakota Rice",
-        username: "Niger",
-        authority: "Oud-Tunrhout",
-        email: "$35,738",
-        status: "root"
+        uid: "",
+        username: "",
+        authority: "",
+        email: "",
+        status: ""
       }
     ],
     datas: [[]],
+    // 控制弹窗
     dialogVisible: false,
+    // 新增管理员信息的字段
     adminname: "",
     adminpwd: "",
-    admiEmail: ""
+    adminEmail: ""
   }),
 
   created: function() {
@@ -135,6 +144,7 @@ export default {
   },
 
   methods: {
+    // 保存修改后的用户状态
     save(uid, status) {
       console.log(uid, status);
       var json = '{"' + uid + '"' + ':"' + status + '"}';
@@ -144,26 +154,30 @@ export default {
           this.$message({
             type: "success",
             message: res.data.message
-          })
+          });
         })
         .catch(err => {
           console.log(err);
         });
     },
+    // 获取用户信息, type0 是普通用户 type1 是管理员
     getUser(type) {
       this.$api.admin
         .getUserList({
           type: type
         })
         .then(res => {
-          this.users = res.data.userList;
-          this.datas[type] = this.users;
+          // 这里数组的值直接改变不是响应式的
+          //this.users = res.data.userList;
+          this.datas[type] = res.data.userList;
         })
         .catch(err => {});
     },
+    // 获取用户主页路由
     getPath(uid) {
       return "/user-profile/" + uid + "/type/info";
     },
+    // 添加管理员
     create() {
       this.$api.admin
         .createCount({

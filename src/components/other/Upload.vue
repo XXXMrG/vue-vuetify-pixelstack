@@ -5,50 +5,50 @@
         <material-card title="上传作品">
           <el-row>
             <el-col :span="12" :offset="5">
-              <v-text-field v-model="title" label="键入本组作品的标题" color="textField"></v-text-field>
+              <v-text-field v-model="title" label="键入本组作品的标题" color="textField"/>
             </el-col>
             <el-col :span="12" :offset="7">
               <el-upload
-                class="upload-demo"
-                drag
-                action="http://47.94.111.235:8080/user/upload"
-                multiple
                 :data="params"
                 :headers="head"
-                accept=".jpg, .png"
-                list-type="picture"
                 :on-preview="preview"
                 :on-success="success"
-                :auto-upload="true"
                 ref="upload"
+                :auto-upload="true"
                 :on-remove="handleRemove"
+                class="upload-demo"
                 :before-upload="ready"
+                drag
+                action="http://13.77.160.68:8080/user/upload"
+                multiple
+                accept=".jpg, .png"
+                list-type="picture"
               >
-                <i class="el-icon-upload"></i>
+                <i class="el-icon-upload"/>
                 <div class="el-upload__text">
                   将文件拖到此处，或
                   <em>点击上传</em>
                 </div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过5MB</div>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5MB</div>
               </el-upload>
             </el-col>
             <el-col :span="12" :offset="5">
               <div class="div-tag">
                 <el-tag
-                  :key="tag"
                   v-for="tag in dynamicTags"
-                  closable
+                  :key="tag"
                   :disable-transitions="false"
+                  closable
                   @close="handleClose(tag)"
-                >{{tag}}</el-tag>
+                >{{ tag }}</el-tag>
               </div>
             </el-col>
             <el-col :span="12" :offset="5">
               <div class="div-add-tag">
                 <v-text-field
-                color="textField"
-                  label="添加新标签，按回车确定"
                   v-model="inputValue"
+                  color="textField"
+                  label="添加新标签，按回车确定"
                   @keyup.enter="handleInputConfirm"
                 />
               </div>
@@ -58,14 +58,13 @@
                 <v-btn block color="secondary" dark @click="upload">完成上传</v-btn>
               </template>
             </el-col>
-            <el-col :span="24"></el-col>
+            <el-col :span="24"/>
           </el-row>
         </material-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
-
 
 <style>
 .div-tag {
@@ -115,17 +114,18 @@ export default {
   },
   methods: {
     handleClose(tag) {
+      // 删除标签
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
 
     handleInputConfirm() {
+      // 键入回车添加标签
       let inputValue = this.inputValue;
       if (inputValue) {
         this.dynamicTags.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = "";
-      0;
     },
     // 点击上传列表中图片的钩子
     preview() {},
@@ -143,12 +143,13 @@ export default {
         })
         .then(res => {
           console.log(res);
-          if (res.data.status = 200){
+          if ((res.data.status = 200)) {
             this.$message({
-              type: 'success',
-              message: '作品上传成功'
-            })
-            this.$router.replace('/pixel')
+              type: "success",
+              message: "作品上传成功"
+            });
+            // 导航到首页
+            this.$router.replace("/pixel");
           }
         })
         .catch(err => {
@@ -160,7 +161,7 @@ export default {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    // 准备上传前的钩子，设置参数中的 title 
+    // 准备上传前的钩子，设置参数中的 title
     ready(file) {
       this.params.title = this.title;
     }

@@ -12,18 +12,22 @@ import './plugins'
 import { sync } from 'vuex-router-sync'
 
 // element-ui add by keith
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-// 全局挂载 api 
+// 全局挂载 api
 import api from './plugins/api/api'
-Vue.prototype.$api = api
+
+// 懒加载
+import VueLazyload from "vue-lazyload";
+Vue.use(VueLazyload);
 
 // Application imports
 import App from './App'
 import i18n from '@/i18n'
 import router from '@/router'
 import store from '@/store'
+Vue.prototype.$api = api
 
 // Sync store with router
 sync(store, router)
@@ -37,5 +41,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-

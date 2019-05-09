@@ -1,23 +1,45 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout row wrap justify-center>
+  <v-container
+    fill-height
+    fluid
+    grid-list-xl>
+    <v-layout
+      row
+      wrap
+      justify-center>
       <v-flex xs12>
         <material-card title="评论管理">
-          <v-layout row wrap justify-start>
-            <v-flex v-for="item in comments" :key="item" xs8 offset-xs1>
+          <v-layout
+            row
+            wrap
+            justify-start>
+            <v-flex
+              v-for="item in comments"
+              :key="item"
+              xs8
+              offset-xs1>
               <material-card :title="'评论 ID：' + item.cid">
-                <v-layout row wrap justify-start>
-                  <v-flex xs2>评论用户：{{item.username}}</v-flex>
-                  <v-flex xs10 offset-xs1>评论内容：{{item.content}}</v-flex>
-                  <v-flex xs4 offset-xs9>评论时间：{{item.cdate}}</v-flex>
-                  <v-flex xs4 offset-xs8>
+                <v-layout
+                  row
+                  wrap
+                  justify-start>
+                  <v-flex xs2>评论用户：{{ item.username }}</v-flex>
+                  <v-flex
+                    xs10
+                    offset-xs1>评论内容：{{ item.content }}</v-flex>
+                  <v-flex
+                    xs4
+                    offset-xs9>评论时间：{{ item.cdate }}</v-flex>
+                  <v-flex
+                    xs4
+                    offset-xs8>
                     <v-btn
                       block
                       depressed
                       color="pink"
                       @click="dealWithReport(true, item.cid)"
                     >确认违规，删除评论</v-btn>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                       block
                       depressed
@@ -40,28 +62,32 @@ export default {
   data: () => ({
     comments: [
       {
-        username: "",
-        content: "",
-        cdata: "",
-        cid: ""
+        username: '',
+        content: '',
+        cdata: '',
+        cid: ''
       }
     ]
   }),
 
+  created: function () {
+    this.getList()
+  },
+
   methods: {
-    getList() {
+    getList () {
       this.$api.admin
         .getReportComment()
         .then(res => {
-          this.comments = res.data.comments;
+          this.comments = res.data.comments
         })
-        .catch(err => {});
+        .catch(err => {})
     },
-    dealWithReport(isRight, cid) {
-      this.$confirm("请确认处理操作 ？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+    dealWithReport (isRight, cid) {
+      this.$confirm('请确认处理操作 ？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           this.$api.admin
@@ -71,20 +97,16 @@ export default {
             })
             .then(res => {
               this.$message({
-                type: "success",
-                message: "处理成功"
-              });
-              console.log(res);
-              this.getList();
+                type: 'success',
+                message: '处理成功'
+              })
+              console.log(res)
+              this.getList()
             })
-            .catch(err => {});
+            .catch(err => {})
         })
-        .catch(() => {});
+        .catch(() => {})
     }
-  },
-
-  created: function() {
-    this.getList();
   }
-};
+}
 </script>

@@ -11,7 +11,7 @@
                   <v-list-tile-sub-title>{{ item.introduction }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+              <v-divider v-if="index + 1 < items.length" :key="index"/>
             </template>
           </v-list>
         </material-card>
@@ -21,18 +21,24 @@
           <v-avatar slot="offset" class="mx-auto d-block" size="130">
             <img src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg">
           </v-avatar>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">{{email}}</h6>
-            <h4 class="card-title font-weight-light">{{username}}</h4>
-            <p class="card-description font-weight-light">{{about}}</p>
+            <h6 class="category text-gray font-weight-thin mb-3">{{ email }}</h6>
+            <h4 class="card-title font-weight-light">{{ username }}</h4>
+            <p class="card-description font-weight-light">{{ about }}</p>
             <v-card-text color="lightinfo">
               <v-layout row wrap>
                 <v-flex md4>
-                <span>Follow: {{follow}}</span></v-flex>
-                <v-flex md4><span>Star: {{star}}</span></v-flex>
-                <v-flex md4><span>Fans: {{fans}}</span></v-flex>
-              <v-btn block color="secondary" dark @click="goback">返回用户主页</v-btn></v-layout>
+                  <span>Follow: {{ follow }}</span>
+                </v-flex>
+                <v-flex md4>
+                  <span>Star: {{ star }}</span>
+                </v-flex>
+                <v-flex md4>
+                  <span>Fans: {{ fans }}</span>
+                </v-flex>
+                <v-btn block color="secondary" dark @click="goback">返回用户主页</v-btn>
+              </v-layout>
             </v-card-text>
           </v-card-text>
         </material-card>
@@ -55,9 +61,8 @@ export default {
     title: "",
     items: [
       {
-        username: "Ali Connors",
-        introduction:
-          "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+        username: "",
+        introduction: ""
       }
     ]
   }),
@@ -109,19 +114,20 @@ export default {
 
   methods: {
     goback() {
-      const path = '/user-profile/' + this.$route.params.id + "/type/info"
-      this.$router.replace(path)
+      const path = "/user-profile/" + this.$route.params.id + "/type/info";
+      this.$router.replace(path);
     },
     go(username) {
-      this.$api.user.getUid({
-        username: username
-      }).then(res => {
-        var uid = res.data.uid
-        var path = "/user-profile/" + uid + "/type/info"
-        this.$router.replace(path)
-      }).catch(err => {
-
-      })
+      this.$api.user
+        .getUid({
+          username: username
+        })
+        .then(res => {
+          var uid = res.data.uid;
+          var path = "/user-profile/" + uid + "/type/info";
+          this.$router.replace(path);
+        })
+        .catch(err => {});
     }
   }
 };
@@ -132,4 +138,3 @@ export default {
   margin-left: 50px;
 }
 </style>
-

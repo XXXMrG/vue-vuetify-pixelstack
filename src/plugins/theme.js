@@ -19,5 +19,5 @@ export default {
   commentinfo: '#006064',
   cButton: '#546E7A',
   pDelete: '#E57373',
-  textField: '#4DB6AC',
+  textField: '#4DB6AC'
 }

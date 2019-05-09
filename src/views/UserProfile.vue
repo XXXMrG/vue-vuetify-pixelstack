@@ -2,10 +2,10 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md8>
-        <material-card color="myinfo" :title="title" :text="subtitle">
+        <material-card :title="title" :text="subtitle" color="myinfo">
           <v-layout row wrap>
             <v-flex v-for="(pixel,index) of pixels.slice(1)" :key="index" md4>
-              <material-my-card :pixel="pixel"></material-my-card>
+              <material-my-card :pixel="pixel"/>
             </v-flex>
           </v-layout>
         </material-card>
@@ -15,20 +15,20 @@
           <v-avatar slot="offset" class="mx-auto d-block" size="130">
             <img src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg">
           </v-avatar>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">{{email}}</h6>
-            <h4 class="card-title font-weight-light">{{username}}</h4>
-            <p class="card-description font-weight-light">{{about}}</p>
+            <h6 class="category text-gray font-weight-thin mb-3">{{ email }}</h6>
+            <h4 class="card-title font-weight-light">{{ username }}</h4>
+            <p class="card-description font-weight-light">{{ about }}</p>
             <v-card-text class="body-2">
               <router-link :to="followPath">
-                <span color="lightinfo">Follow: {{follow}}</span>
+                <span color="lightinfo">Follow: {{ follow }}</span>
               </router-link>
               <el-button type="text" class="items" @click="goStar">
-                <span color="lightinfo">Star: {{star}}</span>
+                <span color="lightinfo">Star: {{ star }}</span>
               </el-button>
               <router-link :to="fansPath" class="items">
-                <span color="lightinfo">Fans: {{fans}}</span>
+                <span color="lightinfo">Fans: {{ fans }}</span>
               </router-link>
             </v-card-text>
             <v-btn
@@ -81,21 +81,30 @@ export default {
     subtitle: ""
   }),
 
-  created: function() {
-    this.followPath = "/user/" + this.$route.params.id + "/type/follow";
-    this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
-    this.isOwner = this.$route.params.id === window.localStorage.uid;
-    this.starPath = "/user-profile/" + this.$route.params.id + "/type/star";
-    this.getTitle();
-    this.getData();
-    this.getPic();
-  },
-
   watch: {
+    // 监听路由以响应路由参数变化
+    $route: "getInfo",
     followPath: "getData"
   },
 
+  created: function() {
+    this.getInfo();
+  },
+
   methods: {
+    getInfo() {
+      // 根据路由参数构造页面关联的路由
+      this.followPath = "/user/" + this.$route.params.id + "/type/follow";
+      this.fansPath = "/user/" + this.$route.params.id + "/type/fans";
+      this.starPath = "/user-profile/" + this.$route.params.id + "/type/star";
+      // 判断用户权限
+      this.isOwner = this.$route.params.id === window.localStorage.uid;
+      // 清空并获取新的数据
+      this.pixels = [];
+      this.getTitle();
+      this.getData();
+      this.getPic();
+    },
     getTitle() {
       // 判断用户当前列表
       switch (this.$route.params.type) {
@@ -172,6 +181,7 @@ export default {
       }
     },
     goFollow() {
+      // 关注或取消关注用户
       this.$api.user
         .goFollow({
           isFollow: !this.isFollow,
@@ -185,12 +195,14 @@ export default {
         .catch(err => {});
     },
     goStar() {
+      // 访问用户 star 列表
       this.$router.replace(this.starPath);
       this.getTitle();
       this.pixels = [];
       this.getPic();
     },
     judge() {
+      // 判断用户是否已经关注该用户
       this.$api.user
         .followRelate({
           uid: window.localStorage.uid,
@@ -211,4 +223,3 @@ export default {
   margin-left: 50px;
 }
 </style>
-

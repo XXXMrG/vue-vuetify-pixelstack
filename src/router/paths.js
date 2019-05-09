@@ -4,7 +4,6 @@
  * official documentation https://router.vuejs.org/en/
  */
 
-
 // Relative to /src/views
 export default [
 
@@ -30,10 +29,10 @@ export default [
     // add editprofile by keith
     path: '/edit-profile',
     name: 'Edit Profile',
-    view: 'EditProfile',
+    view: 'EditProfile'
   },
   {
-    // add test by keith
+    // add upload by keith
     path: '/upload',
     name: '上传作品',
     view: 'Upload'
@@ -58,7 +57,7 @@ export default [
     path: '/admin-comment',
     name: '管理评论',
     view: 'AdminComment'
-  },{
+  }, {
     path: '/search/:type',
     name: '搜索作品',
     view: 'Search'

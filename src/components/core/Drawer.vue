@@ -9,17 +9,28 @@
     mobile-break-point="991"
     width="260"
   >
-    <v-img :src="image" height="100%">
-      <v-layout class="fill-height" tag="v-list" column>
+    <v-img
+      :src="image"
+      height="100%">
+      <v-layout
+        class="fill-height"
+        tag="v-list"
+        column>
         <v-list-tile avatar>
           <v-list-tile-avatar color="white">
-            <v-img src="https://img.icons8.com/office/16/000000/minecraft-diamond.png" height="34" contain/>
+            <v-img
+              src="https://img.icons8.com/office/16/000000/minecraft-diamond.png"
+              height="34"
+              contain/>
           </v-list-tile-avatar>
           <v-list-tile-title class="title">Pixel Stack</v-list-tile-title>
         </v-list-tile>
         <v-divider/>
         <v-list-tile v-if="responsive">
-          <v-text-field class="purple-input search-input" label="Search..." color="purple"/>
+          <v-text-field
+            class="purple-input search-input"
+            label="Search..."
+            color="purple"/>
         </v-list-tile>
 
         <template v-if="authority == 'root' || authority == 'admin' ">
@@ -32,7 +43,7 @@
             class="v-list-item"
           >
             <v-list-tile-action>
-              <v-icon>{{adminlink.icon}}</v-icon>
+              <v-icon>{{ adminlink.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-title v-text="adminlink.text"/>
           </v-list-tile>
@@ -75,123 +86,123 @@
 
 <script>
 // Utilities
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   data: () => ({
-    logo: "./img/vuetifylogo.png",
+    logo: './img/vuetifylogo.png',
     adminlinks: [
       {
         // add pixel by keith
-        to: "/pixel",
-        icon: "mdi-atom",
-        text: "Pixel"
+        to: '/pixel',
+        icon: 'mdi-atom',
+        text: 'Pixel'
       },
       {
-        to: "/search/all",
-        icon: "mdi-image-search",
-        text: "探索"
+        to: '/search/all',
+        icon: 'mdi-image-search',
+        text: '探索'
       },
       {
-        to: "/admin-user",
-        icon: "mdi-account",
-        text: "用户管理"
+        to: '/admin-user',
+        icon: 'mdi-account',
+        text: '用户管理'
       },
       {
-        to: "/admin-comment",
-        icon: "mdi-comment-multiple-outline",
-        text: "评论管理"
+        to: '/admin-comment',
+        icon: 'mdi-comment-multiple-outline',
+        text: '评论管理'
       },
       {
-        to: "/user-profile/" + window.localStorage.uid + "/type/info",
-        icon: "mdi-account",
-        text: "管理员信息"
+        to: '/user-profile/' + window.localStorage.uid + '/type/info',
+        icon: 'mdi-account',
+        text: '管理员信息'
       }
     ],
     userlinks: [
       {
         // add pixel by keith
-        to: "/pixel",
-        icon: "mdi-atom",
-        text: "Pixel"
+        to: '/pixel',
+        icon: 'mdi-atom',
+        text: 'Pixel'
       },
       {
-        to: "/search/all",
-        icon: "mdi-image-search",
-        text: "探索"
+        to: '/search/all',
+        icon: 'mdi-image-search',
+        text: '探索'
       },
       {
-        to: "/upload",
-        icon: "mdi-cloud-upload",
-        text: "上传新作品"
+        to: '/upload',
+        icon: 'mdi-cloud-upload',
+        text: '上传新作品'
       },
       {
-        to: "/user-profile/" + window.localStorage.uid + "/type/info",
-        icon: "mdi-account",
-        text: "我的作品"
+        to: '/user-profile/' + window.localStorage.uid + '/type/info',
+        icon: 'mdi-account',
+        text: '我的作品'
       }
     ],
     visitorlinks: [
       {
         // add pixel by keith
-        to: "/pixel",
-        icon: "mdi-atom",
-        text: "Pixel"
+        to: '/pixel',
+        icon: 'mdi-atom',
+        text: 'Pixel'
       },
 
       {
-        to: "/search/all",
-        icon: "mdi-image-search",
-        text: "探索"
+        to: '/search/all',
+        icon: 'mdi-image-search',
+        text: '探索'
       },
       {
         // add login by keith
-        to: "/login",
-        icon: "mdi-account",
-        text: "登录"
+        to: '/login',
+        icon: 'mdi-account',
+        text: '登录'
       }
     ],
     responsive: false
   }),
   computed: {
-    ...mapState("app", ["image", "color"]),
+    ...mapState('app', ['image', 'color']),
     inputValue: {
-      get() {
-        return this.$store.state.app.drawer;
+      get () {
+        return this.$store.state.app.drawer
       },
-      set(val) {
-        this.setDrawer(val);
+      set (val) {
+        this.setDrawer(val)
       }
     },
-    items() {
-      return this.$t("Layout.View.items");
+    items () {
+      return this.$t('Layout.View.items')
     },
     authority: {
-      get() {
+      get () {
         // 重新检查用户权限
-        return window.localStorage.authority;
+        return window.localStorage.authority
       }
     }
   },
   // 重新渲染 dom 的时候触发的事件
-  mounted() {
-    this.onResponsiveInverted();
-    window.addEventListener("resize", this.onResponsiveInverted);
+  mounted () {
+    this.onResponsiveInverted()
+    window.addEventListener('resize', this.onResponsiveInverted)
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.onResponsiveInverted);
+  beforeDestroy () {
+    window.removeEventListener('resize', this.onResponsiveInverted)
   },
   methods: {
-    ...mapMutations("app", ["setDrawer", "toggleDrawer"]),
-    onResponsiveInverted() {
+    ...mapMutations('app', ['setDrawer', 'toggleDrawer']),
+    onResponsiveInverted () {
       if (window.innerWidth < 991) {
-        this.responsive = true;
+        this.responsive = true
       } else {
-        this.responsive = false;
+        this.responsive = false
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

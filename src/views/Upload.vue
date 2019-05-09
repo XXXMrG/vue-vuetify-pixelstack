@@ -1,4 +1,3 @@
 <template>
-  <other-upload>
-  </other-upload>
+  <other-upload/>
 </template>
