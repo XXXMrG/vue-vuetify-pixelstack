@@ -32,7 +32,7 @@
     </v-layout>
     <el-dialog
       :visible.sync="dialogVisible"
-      :close="onClose"
+      @close="onClose"
       lock-scroll>
       <material-img-info :pid="pid"/>
     </el-dialog>
@@ -61,7 +61,8 @@ export default {
         type: Number,
         default: 0
       }
-    }
+    },
+    onclose: Function
   },
   data: () => ({
     dialogVisible: false,
@@ -74,6 +75,7 @@ export default {
     },
     onClose () {
       // 由于 prop 的单向绑定，这里无法实现数据的重新请求，因此主页数据无法实时更新，一定程度上为了复用牺牲了用户体验
+      // this.onclose(1)
     }
   }
 }

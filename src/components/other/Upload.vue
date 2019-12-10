@@ -19,7 +19,7 @@
                 class="upload-demo"
                 :before-upload="ready"
                 drag
-                action="http://13.77.160.68:8080/user/upload"
+                action="http://47.103.15.127/api/user/upload"
                 multiple
                 accept=".jpg, .png"
                 list-type="picture"

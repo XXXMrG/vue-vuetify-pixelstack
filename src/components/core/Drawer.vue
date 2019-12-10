@@ -4,27 +4,16 @@
     v-model="inputValue"
     app
     dark
+    clipped
     floating
     persistent
     mobile-break-point="991"
     width="260"
   >
-    <v-img
-      :src="image"
-      height="100%">
       <v-layout
         class="fill-height"
         tag="v-list"
         column>
-        <v-list-tile avatar>
-          <v-list-tile-avatar color="white">
-            <v-img
-              src="https://img.icons8.com/office/16/000000/minecraft-diamond.png"
-              height="34"
-              contain/>
-          </v-list-tile-avatar>
-          <v-list-tile-title class="title">Pixel Stack</v-list-tile-title>
-        </v-list-tile>
         <v-divider/>
         <v-list-tile v-if="responsive">
           <v-text-field
@@ -78,9 +67,7 @@
             <v-list-tile-title v-text="link.text"/>
           </v-list-tile>
         </template>
-        <!-- deleted the upgrade to pro at 2019/2/27-->
       </v-layout>
-    </v-img>
   </v-navigation-drawer>
 </template>
 

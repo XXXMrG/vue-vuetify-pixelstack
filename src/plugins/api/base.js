@@ -2,11 +2,8 @@
  * 接口域名的管理
  */
 const base = {
-    sq: "https://xxxx111111.com/api/v1",
-    bd: "http://xxxxx22222.com/api",
-    dev: "http://46.101.35.132:8080",
-    baidu: "https://baid.com",
-    pro: "http://13.77.160.68:8080"
-};
+  dev: 'http://47.103.15.127:8809',
+  prod: 'http://47.103.15.127/api'
+}
 
-export default base
+export default base.prod

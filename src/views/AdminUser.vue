@@ -5,7 +5,7 @@
         <material-card class="card-tabs" color="myinfo">
           <v-flex slot="header">
             <v-tabs v-model="tabs" color="transparent" slider-color="white">
-              <span class="subheading font-weight-light mr-3" style="align-self: center">Tasks:</span>
+              <span class="subheading font-weight-light mr-3" style="align-self: center">用户身份：</span>
               <v-tab class="mr-3">
                 <v-icon class="mr-2">mdi-bug</v-icon>Users
               </v-tab>
@@ -129,7 +129,7 @@ export default {
         status: ""
       }
     ],
-    datas: [[]],
+    datas: [],
     // 控制弹窗
     dialogVisible: false,
     // 新增管理员信息的字段
@@ -167,9 +167,7 @@ export default {
           type: type
         })
         .then(res => {
-          // 这里数组的值直接改变不是响应式的
-          //this.users = res.data.userList;
-          this.datas[type] = res.data.userList;
+          this.datas.push(res.data.userList)
         })
         .catch(err => {});
     },
