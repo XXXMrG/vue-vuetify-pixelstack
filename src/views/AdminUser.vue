@@ -29,7 +29,12 @@
           </v-flex>
           <v-tabs-items v-model="tabs">
             <v-tab-item v-for="n in 2" :key="n">
-              <v-data-table :headers="headers" :items="datas[n-1]" :search="search">
+              <v-data-table 
+                :headers="headers" 
+                :items="datas[n-1]" 
+                :search="search" 
+                :rows-per-page-items="[10, 15, 20]"
+              >
                 <template slot="headerCell" slot-scope="{ header }">
                   <span class="subheading font-weight-light text--darken-3" v-text="header.text"/>
                 </template>
@@ -139,15 +144,14 @@ export default {
   }),
 
   created: function() {
-    this.getUser(0);
-    this.getUser(1);
+    this.initData()
   },
 
   methods: {
     // 保存修改后的用户状态
     save(uid, status) {
       console.log(uid, status);
-      var json = '{"' + uid + '"' + ':"' + status + '"}';
+      const json = '{"' + uid + '"' + ':"' + status + '"}';
       this.$api.admin
         .manageStatus(json)
         .then(res => {
@@ -159,6 +163,12 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    async initData() {
+      let list = await this.$api.admin.getUserList({type: 0})
+      this.datas.push(list.data.userList)
+      list = await this.$api.admin.getUserList({type: 1})
+      this.datas.push(list.data.userList)
     },
     // 获取用户信息, type0 是普通用户 type1 是管理员
     getUser(type) {
@@ -180,7 +190,7 @@ export default {
       this.$api.admin
         .createCount({
           username: this.adminname,
-          email: this.admiEmail,
+          email: this.adminEmail,
           password: this.adminpwd,
           authority: window.localStorage.authority
         })
@@ -192,6 +202,7 @@ export default {
               message: "添加管理员成功"
             });
             this.dialogVisible = false;
+            this.datas.pop()
             this.getUser(1);
           } else {
             this.$message.error(res.data.message);

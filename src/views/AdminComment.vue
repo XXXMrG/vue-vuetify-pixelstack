@@ -8,7 +8,7 @@
       wrap
       justify-center>
       <v-flex xs12>
-        <material-card title="评论管理">
+        <material-card title="评论管理" text="在这里管理涉嫌违规的评论" color="myinfo">
           <v-layout
             row
             wrap
@@ -16,9 +16,9 @@
             <v-flex
               v-for="item in comments"
               :key="item"
-              xs8
+              xs10
               offset-xs1>
-              <material-card :title="'评论 ID：' + item.cid">
+              <material-card :title="'评论 ID：' + item.cid" color="pink">
                 <v-layout
                   row
                   wrap
@@ -36,7 +36,7 @@
                     <v-btn
                       block
                       depressed
-                      color="pink"
+                      color="star"
                       @click="dealWithReport(true, item.cid)"
                     >确认违规，删除评论</v-btn>
                     <v-spacer/>

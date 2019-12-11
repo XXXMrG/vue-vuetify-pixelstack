@@ -4,7 +4,7 @@
       <v-flex xs12 md8>
         <material-card :title="title" :text="subtitle" color="myinfo">
           <v-layout row wrap>
-            <v-flex v-for="(pixel,index) of pixels.slice(1)" :key="index" md4>
+            <v-flex v-for="(pixel,index) of pixels" :key="index" md4>
               <material-my-card :pixel="pixel"/>
             </v-flex>
           </v-layout>
@@ -125,8 +125,7 @@ export default {
           uid: this.$route.params.id
         })
         .then(res => {
-          console.log(res);
-          var info = res.data.userInfo;
+          const info = res.data.userInfo;
           this.username = info.username;
           this.email = info.email;
           this.about = info.introduction;
@@ -147,7 +146,7 @@ export default {
             })
             .then(res => {
               for (let data of res.data.imageList) {
-                var pixel = {
+                const pixel = {
                   smallUrl: this.$api.root.getOriginalUrl(data.url),
                   pid: data.iid,
                   views: data.count,
@@ -166,7 +165,7 @@ export default {
             })
             .then(res => {
               for (let data of res.data.starList) {
-                var pixel = {
+                const pixel = {
                   smallUrl: this.$api.root.getOriginalUrl(data.url),
                   pid: data.iid,
                   views: data.count,
