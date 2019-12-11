@@ -163,7 +163,16 @@ export default {
     },
     // 准备上传前的钩子，设置参数中的 title
     ready(file) {
-      this.params.title = this.title;
+      const isLs5M = file.size / 1024 / 1024 < 5
+      if (!isLs5M) {
+        this.$message({
+              type: "error",
+              message: "作品大小不能超过 5M !"
+            });
+      }else {
+        this.params.title = this.title;
+      }
+      return isLs5M
     }
   }
 };

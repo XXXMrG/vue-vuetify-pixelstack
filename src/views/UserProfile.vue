@@ -137,6 +137,7 @@ export default {
         .catch(err => {});
     },
     getPic() {
+      this.pixels = []
       switch (this.$route.params.type) {
         case "info":
           // 请求用户上传的图片
@@ -195,10 +196,8 @@ export default {
     },
     goStar() {
       // 访问用户 star 列表
+      // route 的改变会重新触发 create
       this.$router.replace(this.starPath);
-      this.getTitle();
-      this.pixels = [];
-      this.getPic();
     },
     judge() {
       // 判断用户是否已经关注该用户
@@ -208,7 +207,6 @@ export default {
           fid: this.$route.params.id
         })
         .then(res => {
-          console.log(res);
           this.isFollow = res.data.isFollow;
         })
         .catch(err => {});
